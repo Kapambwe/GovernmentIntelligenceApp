@@ -1,0 +1,77 @@
+[
+  {
+    "id": "MAP-POLICY-IMPLEMENTATION",
+    "workflowCode": "POLICY-IMPLEMENTATION",
+    "workflowName": "Policy implementation and compliance review",
+    "owningInstitution": "Department of Planning, Monitoring and Evaluation",
+    "responsibleInstitution": "Department of Public Service and Administration",
+    "participatingInstitutions": ["National Treasury", "Office of the Auditor-General", "Affected implementing ministry"],
+    "approvingAuthority": "Cabinet Secretariat",
+    "escalationInstitution": "Office of the President",
+    "geographicScope": "National; all provinces and municipalities",
+    "applicableRoles": ["Cabinet Secretary", "Policy Director", "Monitoring Officer", "Legal Adviser"],
+    "permissions": ["LifecycleView", "OperationsView", "LegalInstrumentsView", "ApprovePolicyImplementation"],
+    "status": "Active",
+    "effectiveFrom": "2026-01-15T00:00:00Z",
+    "effectiveTo": null,
+    "delegationHistory": [
+      { "fromInstitution": "Cabinet Secretariat", "toInstitution": "Department of Planning, Monitoring and Evaluation", "fromRole": "Cabinet Secretary", "toRole": "Policy Director", "reason": "Delegated implementation monitoring authority", "effectiveFrom": "2026-01-15T00:00:00Z", "effectiveTo": null }
+    ],
+    "stepInstitutions": [
+      { "stepOrder": 1, "stepName": "Register policy mandate", "institution": "Cabinet Secretariat", "role": "Cabinet Secretary" },
+      { "stepOrder": 2, "stepName": "Translate mandate into outcomes", "institution": "Department of Planning, Monitoring and Evaluation", "role": "Policy Director" },
+      { "stepOrder": 3, "stepName": "Validate legal obligations", "institution": "Department of Justice and Constitutional Development", "role": "Legal Adviser" },
+      { "stepOrder": 4, "stepName": "Monitor implementation evidence", "institution": "Department of Public Service and Administration", "role": "Monitoring Officer" }
+    ]
+  },
+  {
+    "id": "MAP-PROCUREMENT-AWARD",
+    "workflowCode": "PROCUREMENT-AWARD",
+    "workflowName": "Public procurement tender and award",
+    "owningInstitution": "National Treasury",
+    "responsibleInstitution": "Department of Public Works and Infrastructure",
+    "participatingInstitutions": ["Central Supplier Database", "Bid Evaluation Committee", "Office of the Auditor-General"],
+    "approvingAuthority": "Accounting Officer",
+    "escalationInstitution": "Chief Procurement Officer",
+    "geographicScope": "National; procurement jurisdiction of the contracting authority",
+    "applicableRoles": ["Accounting Officer", "Procurement Officer", "Bid Committee Member", "Internal Auditor"],
+    "permissions": ["OperationsView", "ProcurementView", "SupplierDueDiligence", "ApproveTender"],
+    "status": "Active",
+    "effectiveFrom": "2026-02-01T00:00:00Z",
+    "effectiveTo": null,
+    "delegationHistory": [
+      { "fromInstitution": "National Treasury", "toInstitution": "Department of Public Works and Infrastructure", "fromRole": "Chief Procurement Officer", "toRole": "Accounting Officer", "reason": "Contracting authority delegation for the procurement programme", "effectiveFrom": "2026-02-01T00:00:00Z", "effectiveTo": null }
+    ],
+    "stepInstitutions": [
+      { "stepOrder": 1, "stepName": "Publish tender", "institution": "Department of Public Works and Infrastructure", "role": "Procurement Officer" },
+      { "stepOrder": 2, "stepName": "Evaluate bids", "institution": "Bid Evaluation Committee", "role": "Bid Committee Member" },
+      { "stepOrder": 3, "stepName": "Approve award", "institution": "Department of Public Works and Infrastructure", "role": "Accounting Officer" },
+      { "stepOrder": 4, "stepName": "Review control exceptions", "institution": "Office of the Auditor-General", "role": "Internal Auditor" }
+    ]
+  },
+  {
+    "id": "MAP-PAYMENT-RECONCILIATION",
+    "workflowCode": "PAYMENT-RECONCILIATION",
+    "workflowName": "Programme payment and reconciliation",
+    "owningInstitution": "National Treasury",
+    "responsibleInstitution": "Department of Social Development",
+    "participatingInstitutions": ["Provincial Treasury", "South African Revenue Service", "Service delivery partner"],
+    "approvingAuthority": "Director-General of Social Development",
+    "escalationInstitution": "Provincial Treasury",
+    "geographicScope": "All participating provinces; beneficiary jurisdiction applies",
+    "applicableRoles": ["Finance Manager", "Payment Authoriser", "Beneficiary Services Officer", "Compliance Officer"],
+    "permissions": ["FinanceView", "PaymentApprove", "ReconciliationView", "ComplianceInvestigate"],
+    "status": "Under review",
+    "effectiveFrom": "2026-03-01T00:00:00Z",
+    "effectiveTo": "2026-12-31T23:59:59Z",
+    "delegationHistory": [
+      { "fromInstitution": "Department of Social Development", "toInstitution": "Provincial Treasury", "fromRole": "Finance Manager", "toRole": "Finance Manager", "reason": "Settlement reconciliation delegated to the provincial treasury", "effectiveFrom": "2026-03-01T00:00:00Z", "effectiveTo": "2026-12-31T23:59:59Z" }
+    ],
+    "stepInstitutions": [
+      { "stepOrder": 1, "stepName": "Confirm approved obligation", "institution": "Department of Social Development", "role": "Finance Manager" },
+      { "stepOrder": 2, "stepName": "Authorise payment batch", "institution": "Department of Social Development", "role": "Payment Authoriser" },
+      { "stepOrder": 3, "stepName": "Reconcile settlement events", "institution": "Provincial Treasury", "role": "Finance Manager" },
+      { "stepOrder": 4, "stepName": "Escalate unresolved variance", "institution": "National Treasury", "role": "Compliance Officer" }
+    ]
+  }
+]

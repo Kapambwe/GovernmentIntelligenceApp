@@ -1,0 +1,6 @@
+[
+  { "sourceApplication": "National Finance Management System", "institutionName": "Ministry of Finance", "status": "Healthy", "eventsToday": 128, "lastEventAt": "2026-09-26T08:28:00", "message": "Events are within the expected reporting interval." },
+  { "sourceApplication": "Government Project Delivery App", "institutionName": "Road Development Agency", "status": "Healthy", "eventsToday": 64, "lastEventAt": "2026-09-26T07:42:00", "message": "Delivery and milestone events are current." },
+  { "sourceApplication": "Municipal Finance System", "institutionName": "Lusaka City Council", "status": "Stale", "eventsToday": 0, "lastEventAt": "2026-09-25T11:45:00", "message": "No event received during the expected reporting window." },
+  { "sourceApplication": "Integrated Treasury Platform", "institutionName": "National Water Management Authority", "status": "Partial", "eventsToday": 31, "lastEventAt": "2026-09-25T16:45:00", "message": "Settlement events are available; reconciliation events are delayed." }
+]

@@ -1,0 +1,3 @@
+[
+  { "Id":"ACT-SAMPLE-001", "Title":"Confirm foundation acceptance evidence", "Reason":"Payment evidence gap detected by TWIN-PAYMENT-DELIVERY-LINK.", "ActionType":"Request evidence confirmation", "OwnerInstitution":"Lusaka City Council", "OwnerRole":"Building Inspector", "Status":"Open", "EvidenceReferences":["inspection:INSP-102"], "DueDate":"2026-09-30T00:00:00Z", "CorrelationId":"CORR-SAMPLE-001", "CreatedAt":"2026-09-25T09:00:00Z" }
+]

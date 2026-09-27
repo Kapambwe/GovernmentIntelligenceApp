@@ -1,0 +1,16 @@
+{
+  "reportingPeriod": "September 2026",
+  "activeProgrammeCount": 42,
+  "atRiskProjectCount": 11,
+  "monitoredPublicValue": 1845000000,
+  "currency": "ZMW",
+  "openDecisionCount": 7,
+  "unresolvedBottleneckCount": 14,
+  "sourceHealthScore": 91.5,
+  "overallProgress": 68.4,
+  "budgetUtilisation": 61.2,
+  "reconciliationRate": 87.8,
+  "evidenceAcceptanceRate": 79.6,
+  "outcomeProgress": 64.7,
+  "lastRefreshed": "2026-09-26T08:30:00"
+}

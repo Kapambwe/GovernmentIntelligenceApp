@@ -1,0 +1,4 @@
+[
+  { "classification":"Public", "requiredPermission":"LegalInstrumentsView", "allowedRoles":"Legal Adviser; Auditor; Executive Viewer", "requiresDualControl":false, "exportAllowed":true, "maskingRule":"None" },
+  { "classification":"Restricted", "requiredPermission":"LegalRestrictedView", "allowedRoles":"Attorney General; Cabinet Secretary; Authorised Legal Reviewer", "requiresDualControl":true, "exportAllowed":false, "maskingRule":"Mask personal and confidential source details" }
+]

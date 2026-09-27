@@ -1,0 +1,4 @@
+[
+  { "id":"RET-LEGAL-001", "resourceId":"LAW-014", "retentionClass":"Permanent legal authority", "retainUntil":"2099-12-31", "legalHoldStatus":"Not on hold", "disposalStatus":"Protected", "custodian":"National Legal Register" },
+  { "id":"RET-LEGAL-002", "resourceId":"GUI-008", "retentionClass":"Restricted policy evidence", "retainUntil":"2036-02-10", "legalHoldStatus":"On legal hold", "disposalStatus":"Disposal blocked", "custodian":"Data Protection Office" }
+]

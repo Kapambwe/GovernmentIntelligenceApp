@@ -1,0 +1,4 @@
+[
+  { "id": "REV-LAW-014-001", "instrumentId": "LAW-014", "status": "Approved", "reviewer": "Office of the Attorney General", "decision": "Retain as active", "findings": "Current finance controls remain applicable.", "evidenceReference": "LEGAL-REVIEW-2026-014", "reviewedAt": "2026-09-10T08:30:00Z" },
+  { "id": "REV-DIR-2026-003-001", "instrumentId": "DIR-2026-003", "status": "Pending", "reviewer": "Ministry of Lands and Natural Resources", "decision": "", "findings": "Confirm signed directive and source publication before workflow execution.", "evidenceReference": "", "reviewedAt": "2026-09-20T10:00:00Z" }
+]

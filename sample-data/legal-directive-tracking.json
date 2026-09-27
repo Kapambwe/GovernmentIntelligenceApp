@@ -1,0 +1,4 @@
+[
+  { "id":"TRACK-DIR-003", "instrumentId":"DIR-2026-003", "acknowledgementStatus":"Acknowledged", "complianceDeadline":"2026-10-15", "reportingRequirement":"Submit monthly land allocation control report", "requiredEvidence":["official search register","title issuance register"], "evidenceStatus":"Partial", "escalationAuthority":"Permanent Secretary — Lands", "responsibleInstitution":"Ministry of Lands and Natural Resources", "acknowledgedAt":"2026-09-10T08:00:00Z" },
+  { "id":"TRACK-CIR-007", "instrumentId":"CIR-2026-007", "acknowledgementStatus":"Not acknowledged", "complianceDeadline":"2026-10-01", "reportingRequirement":"Confirm monthly legal register review", "requiredEvidence":["review minutes","change assessment"], "evidenceStatus":"Missing", "escalationAuthority":"Cabinet Office", "responsibleInstitution":"All government institutions", "escalationStatus":"Not escalated" }
+]

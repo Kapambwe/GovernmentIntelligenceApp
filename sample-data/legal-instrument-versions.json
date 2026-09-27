@@ -1,0 +1,4 @@
+[
+  { "id":"LAW-014-V1", "instrumentId":"LAW-014", "version":"1.0", "lifecycleState":"Superseded", "effectiveDate":"2018-07-01", "expiryDate":"2024-06-30", "publishedAt":"2018-06-15T08:00:00Z", "publishedBy":"Government Printer", "contentHash":"sha256:LAW-014-V1", "previousVersionId":"", "changeSummary":"Initial published version.", "approvalStatus":"Approved", "isImmutable":true },
+  { "id":"LAW-014-V2", "instrumentId":"LAW-014", "version":"2.0", "lifecycleState":"Effective", "effectiveDate":"2024-07-01", "expiryDate":null, "publishedAt":"2024-06-15T08:00:00Z", "publishedBy":"Government Printer", "contentHash":"sha256:LAW-014-V2", "previousVersionId":"LAW-014-V1", "changeSummary":"Updated accountable-officer reporting and evidence obligations.", "approvalStatus":"Approved", "isImmutable":true }
+]

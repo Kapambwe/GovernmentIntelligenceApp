@@ -1,0 +1,6 @@
+[
+  { "id": "AUD-PROC-001", "actionId": "ACT-PROC-001", "eventType": "Created", "status": "Open", "actor": "Government Intelligence Engine", "note": "Evidence request created from procurement control exception.", "evidenceReference": "COI-DECLARATION-MISSING", "occurredAt": "2026-09-25T07:42:18Z" },
+  { "id": "AUD-PROC-002", "actionId": "ACT-PROC-002", "eventType": "Created", "status": "Open", "actor": "Government Intelligence Engine", "note": "Escalation action scheduled if declaration remains missing.", "evidenceReference": "TENDER-RDA-044", "occurredAt": "2026-09-25T07:42:18Z" },
+  { "id": "AUD-PAY-001", "actionId": "ACT-PAY-001", "eventType": "Completed", "status": "Completed", "actor": "Reconciliation Officer", "note": "Reconciliation evidence package indexed and retained.", "evidenceReference": "BANK-SETTLEMENT-8821", "occurredAt": "2026-09-24T04:10:00Z" },
+  { "id": "AUD-POL-001", "actionId": "ACT-POL-001", "eventType": "Created", "status": "Open", "actor": "Government Intelligence Engine", "note": "Missing indicator evidence requires accountable follow-up.", "evidenceReference": "OUTCOME-EVIDENCE-GAP-12", "occurredAt": "2026-09-23T10:21:44Z" }
+]

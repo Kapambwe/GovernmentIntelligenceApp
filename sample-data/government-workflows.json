@@ -1,0 +1,632 @@
+[
+  {
+    "id": "WF-001",
+    "workflowCode": "POLICY-IMPLEMENTATION",
+    "workflowName": "Policy to Programme Approval",
+    "triggerType": "Event",
+    "eventNames": ["PolicyApproved", "PolicyDirectiveIssued"],
+    "trigger": "PolicyApproved or PolicyDirectiveIssued",
+    "purpose": "Translate an approved policy mandate into an authorized programme with outcomes, beneficiaries, targets and an accountable institution.",
+    "institution": "Cabinet Office and Lead Ministry",
+    "ownerRole": "Programme Delivery Unit Lead",
+    "status": "Active",
+    "version": "1.2",
+    "lastReviewed": "2026-08-20T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Validate legal mandate", "explanation": "Confirm that the policy has a valid legal authority, defined jurisdiction and no unresolved legal conflict before operational design begins.", "responsibleRole": "Legal Review Officer", "requiredEvidence": "Published policy, legal instrument and mandate decision", "completionEvent": "MandateValidationCompleted" },
+      { "order": 2, "name": "Define outcomes and beneficiaries", "explanation": "Describe the intended change, beneficiary cohort, baseline, indicators and service levels in terms that can be measured.", "responsibleRole": "Programme Delivery Unit Lead", "requiredEvidence": "Outcome framework and beneficiary definition", "completionEvent": "OutcomeFrameworkDefined" },
+      { "order": 3, "name": "Review affordability and inclusion", "explanation": "Test affordability, duplication, equality, accessibility, environmental and data requirements before approval.", "responsibleRole": "Ministry Accounting Officer", "requiredEvidence": "Cost model, inclusion assessment and data-source review", "completionEvent": "ProgrammeDesignReviewed" },
+      { "order": 4, "name": "Approve programme gate", "explanation": "Record the authorized programme owner, targets, reporting obligations and conditions for moving into project registration.", "responsibleRole": "Cabinet or Ministry Authority", "requiredEvidence": "Programme approval decision", "completionEvent": "ProgrammeApproved" }
+    ],
+    "rules": [
+      { "id": "WFR-001", "sourceInstrumentId": "POL-001", "sourceInstrumentName": "National Digital Government Policy", "ruleName": "Digital service standard review", "machineExpression": "programme.hasDigitalService == true -> serviceStandards.reviewRequired == true", "explanation": "A programme involving a digital service must be reviewed against the national digital service standards.", "status": "Active" },
+      { "id": "WFR-002", "sourceInstrumentId": "LAW-014", "sourceInstrumentName": "Public Finance Management Act", "ruleName": "Affordability review", "machineExpression": "programme.estimatedCost > 0 -> affordabilityAssessment.required == true", "explanation": "Every funded programme must have an affordability and funding assessment before approval.", "status": "Active" }
+    ]
+  },
+  {
+    "id": "WF-002",
+    "workflowCode": "PROCUREMENT-AWARD",
+    "workflowName": "Procurement to Contract Award",
+    "triggerType": "Event",
+    "eventNames": ["BudgetApproved", "ProcurementNeedIdentified"],
+    "trigger": "BudgetApproved and ProcurementNeedIdentified",
+    "purpose": "Control the procurement lifecycle from approved need through competition, evaluation, conflict checks and award recommendation.",
+    "institution": "Procuring Entity and Public Procurement Authority",
+    "ownerRole": "Procurement Committee Chair",
+    "status": "Active",
+    "version": "2.0",
+    "lastReviewed": "2026-09-01T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Select procurement method", "explanation": "Select an approved method using the estimated value, category, urgency and applicable thresholds.", "responsibleRole": "Procurement Officer", "requiredEvidence": "Procurement plan and method decision", "completionEvent": "ProcurementMethodSelected" },
+      { "order": 2, "name": "Publish tender and receive bids", "explanation": "Publish complete specifications and preserve an auditable record of suppliers, clarifications and bid submissions.", "responsibleRole": "Tender Administrator", "requiredEvidence": "Published tender and bid register", "completionEvent": "BidSubmissionClosed" },
+      { "order": 3, "name": "Evaluate and check conflicts", "explanation": "Evaluate responsive bids, record reasons, check beneficial ownership and capture declarations of interest.", "responsibleRole": "Evaluation Committee", "requiredEvidence": "Evaluation report, conflict declarations and ownership checks", "completionEvent": "BidEvaluationCompleted" },
+      { "order": 4, "name": "Approve award", "explanation": "Obtain the required approval and notify affected parties before contract activation.", "responsibleRole": "Accounting Officer", "requiredEvidence": "Award recommendation and approval decision", "completionEvent": "AwardApproved" }
+    ],
+    "rules": [
+      { "id": "WFR-003", "sourceInstrumentId": "LAW-020", "sourceInstrumentName": "Public Procurement Act", "ruleName": "Approved method required", "machineExpression": "procurement.estimatedValue >= threshold -> procurement.method in approvedMethods", "explanation": "Procurement above a statutory threshold must use an approved competitive method.", "status": "Active" },
+      { "id": "WFR-004", "sourceInstrumentId": "REG-022", "sourceInstrumentName": "Public Procurement Regulations", "ruleName": "Conflict declaration required", "machineExpression": "evaluation.started == true -> everyEvaluator.conflictDeclaration == submitted", "explanation": "Every evaluator must submit a conflict declaration before evaluation results can be accepted.", "status": "Active" }
+    ]
+  },
+  {
+    "id": "WF-003",
+    "workflowCode": "PAYMENT-RECONCILIATION",
+    "workflowName": "Milestone Payment and Reconciliation",
+    "triggerType": "Event",
+    "eventNames": ["MilestoneAccepted", "InvoiceSubmitted"],
+    "trigger": "MilestoneAccepted and InvoiceSubmitted",
+    "purpose": "Match budget, contract, delivery evidence, invoice, approval, bank settlement and ledger reconciliation before closing a payment.",
+    "institution": "Accounting Officer, Treasury and Receiving Institution",
+    "ownerRole": "Finance Manager",
+    "status": "Active",
+    "version": "1.4",
+    "lastReviewed": "2026-08-30T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Validate invoice", "explanation": "Check supplier identity, contract reference, tax details, arithmetic and required invoice fields.", "responsibleRole": "Accounts Payable Officer", "requiredEvidence": "Validated invoice and supplier record", "completionEvent": "InvoiceValidated" },
+      { "order": 2, "name": "Complete three or four-way match", "explanation": "Match the invoice to the contract or purchase order, accepted delivery and available budget before approval.", "responsibleRole": "Finance Control Officer", "requiredEvidence": "Match result and acceptance evidence", "completionEvent": "FourWayMatchCompleted" },
+      { "order": 3, "name": "Approve and disburse", "explanation": "Apply segregation of duties, approve the payment and dispatch it through the authorized treasury process.", "responsibleRole": "Accounting Officer", "requiredEvidence": "Approval decision and payment instruction", "completionEvent": "PaymentDisbursed" },
+      { "order": 4, "name": "Reconcile and close", "explanation": "Match the bank transaction to the ledger, supplier account, project and outcome contribution, or open an exception.", "responsibleRole": "Treasury Reconciliation Officer", "requiredEvidence": "Bank statement, ledger entry and reconciliation result", "completionEvent": "PaymentReconciled" }
+    ],
+    "rules": [
+      { "id": "WFR-005", "sourceInstrumentId": "LAW-014", "sourceInstrumentName": "Public Finance Management Act", "ruleName": "Available appropriation", "machineExpression": "payment.amount <= budget.availableBalance && payment.purpose == appropriation.purpose", "explanation": "A payment must remain within an available appropriation and its lawful purpose.", "status": "Active" },
+      { "id": "WFR-006", "sourceInstrumentId": "LAW-014", "sourceInstrumentName": "Public Finance Management Act", "ruleName": "Segregation of duties", "machineExpression": "payment.approver != payment.preparer && payment.approver != supplierAccountEditor", "explanation": "The payment approver must be independent from preparation and supplier bank-account changes.", "status": "Active" }
+    ]
+  },
+  {
+    "id": "WF-004",
+    "workflowCode": "DAILY-SOURCE-HEALTH",
+    "workflowName": "Daily Source Health and Stale Data Escalation",
+    "triggerType": "Scheduled",
+    "eventNames": [],
+    "trigger": "Scheduled daily run at 06:00",
+    "schedule": "Every day at 06:00 Africa/Johannesburg",
+    "escalationTrigger": "Source remains stale or unavailable after health check",
+    "escalationOwner": "Government Data Steward",
+    "purpose": "Check government source freshness, event processing health and reconciliation queues before the daily intelligence briefing.",
+    "institution": "Government Intelligence Engine and connected source institutions",
+    "ownerRole": "Government Data Steward",
+    "status": "Active",
+    "version": "1.0",
+    "lastReviewed": "2026-09-10T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Run source health checks", "explanation": "Connect to each registered source and record availability, authentication, response time and last successful event.", "responsibleRole": "Integration Operations Officer", "requiredEvidence": "Source health result and timestamp", "completionEvent": "SourceHealthChecked" },
+      { "order": 2, "name": "Detect stale or missing data", "explanation": "Compare the latest source event with the freshness SLA and create a data-quality signal when the source is late or silent.", "responsibleRole": "Government Data Steward", "requiredEvidence": "Freshness evaluation and source SLA", "completionEvent": "SourceStalenessDetected" },
+      { "order": 3, "name": "Create remediation task", "explanation": "Assign the source owner a remediation task with an SLA, affected dashboards and the expected recovery evidence.", "responsibleRole": "Data Operations Coordinator", "requiredEvidence": "Assigned remediation task", "completionEvent": "DataRemediationTaskCreated" },
+      { "order": 4, "name": "Escalate unresolved outage", "explanation": "Escalate the outage to the institutional owner and platform leadership when the source remains stale after the first response window.", "responsibleRole": "Platform Operations Lead", "requiredEvidence": "Escalation record and acknowledgement", "completionEvent": "SourceHealthEscalated" }
+    ],
+    "rules": [
+      { "id": "WFR-007", "sourceInstrumentId": "POL-001", "sourceInstrumentName": "National Digital Government Policy", "ruleName": "Service availability monitoring", "machineExpression": "source.lastEventAge > source.freshnessSla -> signal.type = 'StaleSource'", "explanation": "Digital government sources must be monitored for availability and freshness.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "30 minutes", "recipientRole": "Source Data Steward", "action": "Create remediation task and request acknowledgement" },
+      { "level": 2, "after": "2 hours", "recipientRole": "Institutional Operations Lead", "action": "Escalate source outage and publish affected-data warning" },
+      { "level": 3, "after": "1 business day", "recipientRole": "Platform Operations Director", "action": "Open incident response and include outage in executive briefing" }
+    ]
+  },
+  {
+    "id": "WF-005",
+    "workflowCode": "OVERDUE-TASK-ESCALATION",
+    "workflowName": "Overdue Task and Bottleneck Escalation",
+    "triggerType": "Scheduled",
+    "eventNames": [],
+    "trigger": "Scheduled daily run at 08:00",
+    "schedule": "Every 2 days at 08:00 Africa/Johannesburg",
+    "escalationTrigger": "Task is overdue, blocked or has missed its service-level target",
+    "escalationOwner": "Institutional Task Dashboard Owner",
+    "purpose": "Review overdue tasks and blocked lifecycle work, notify accountable owners and escalate unresolved material delays.",
+    "institution": "All participating ministries, state-owned enterprises and government agents",
+    "ownerRole": "Institutional Task Dashboard Owner",
+    "status": "Active",
+    "version": "1.1",
+    "lastReviewed": "2026-09-12T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Find overdue work", "explanation": "Select open tasks whose due date or service-level clock has expired and exclude approved pauses.", "responsibleRole": "Workflow Scheduler", "requiredEvidence": "Overdue task query result", "completionEvent": "OverdueTasksDetected" },
+      { "order": 2, "name": "Notify accountable owner", "explanation": "Send the owner the task, evidence gap, dependency, age and expected recovery date.", "responsibleRole": "Task Coordinator", "requiredEvidence": "Notification and delivery acknowledgement", "completionEvent": "OverdueTaskReminderSent" },
+      { "order": 3, "name": "Open or update bottleneck", "explanation": "Create a bottleneck signal when the task is blocked by funding, capacity, legal, data or dependency constraints.", "responsibleRole": "Programme Delivery Unit Lead", "requiredEvidence": "Bottleneck assessment", "completionEvent": "BottleneckLinked" },
+      { "order": 4, "name": "Escalate material delay", "explanation": "Escalate high-materiality or repeatedly overdue work to the institution lead and executive coordination function.", "responsibleRole": "Institutional Task Dashboard Owner", "requiredEvidence": "Escalation decision and impact assessment", "completionEvent": "TaskEscalated" }
+    ],
+    "rules": [
+      { "id": "WFR-008", "sourceInstrumentId": "POL-001", "sourceInstrumentName": "National Digital Government Policy", "ruleName": "Delivery exception visibility", "machineExpression": "task.overdue == true -> task.status != 'Hidden' && task.escalationRequired == true", "explanation": "Delivery exceptions must remain visible and be routed for action.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "1 day overdue", "recipientRole": "Assigned task owner", "action": "Send reminder and request recovery date" },
+      { "level": 2, "after": "3 days overdue", "recipientRole": "Institutional Programme Lead", "action": "Review capacity and dependency blockers" },
+      { "level": 3, "after": "5 days overdue", "recipientRole": "Executive Delivery Coordinator", "action": "Escalate material delay for intervention decision" }
+    ]
+  },
+  {
+    "id": "WF-006",
+    "workflowCode": "PROCUREMENT-RED-FLAG",
+    "workflowName": "Daily Procurement Red-Flag Escalation",
+    "triggerType": "Scheduled",
+    "eventNames": ["BidEvaluated"],
+    "trigger": "Scheduled daily run at 07:30 and BidEvaluated",
+    "schedule": "Every day at 07:30 Africa/Johannesburg",
+    "escalationTrigger": "High-confidence procurement red flag remains unreviewed",
+    "escalationOwner": "Public Procurement Authority Review Lead",
+    "purpose": "Review procurement signals such as split purchases, bid concentration, related parties and unsupported variations without treating a signal as a finding of guilt.",
+    "institution": "Public Procurement Authority and procuring entities",
+    "ownerRole": "Regulatory Assurance Officer",
+    "status": "Active",
+    "version": "1.0",
+    "lastReviewed": "2026-09-05T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Evaluate procurement signals", "explanation": "Run machine-readable procurement rules against new bids, awards, supplier relationships and transaction patterns.", "responsibleRole": "Compliance Rule Engine", "requiredEvidence": "Rule execution result and source facts", "completionEvent": "ProcurementSignalCreated" },
+      { "order": 2, "name": "Triage red flag", "explanation": "A human reviewer checks data quality, alternative explanations, materiality and whether the signal requires a case or correction.", "responsibleRole": "Regulatory Assurance Officer", "requiredEvidence": "Triage assessment and reviewer notes", "completionEvent": "ProcurementSignalTriaged" },
+      { "order": 3, "name": "Request evidence", "explanation": "Request declarations, ownership records, procurement files and explanations from the responsible institution.", "responsibleRole": "Procurement Review Officer", "requiredEvidence": "Evidence request and response", "completionEvent": "ProcurementEvidenceRequested" },
+      { "order": 4, "name": "Escalate or close signal", "explanation": "Escalate unresolved high-confidence signals to assurance or investigation authorities, or record a supported closure.", "responsibleRole": "Public Procurement Authority Review Lead", "requiredEvidence": "Review decision and referral or closure record", "completionEvent": "ProcurementSignalDecisioned" }
+    ],
+    "rules": [
+      { "id": "WFR-009", "sourceInstrumentId": "LAW-020", "sourceInstrumentName": "Public Procurement Act", "ruleName": "Potential split purchase", "machineExpression": "sameSupplier.sameCategory.rolling30DayValue >= threshold && purchases.count > 1 -> signal = 'PotentialSplitPurchase'", "explanation": "Repeated related purchases may require review for prohibited splitting or an incorrect procurement method.", "status": "Active" },
+      { "id": "WFR-010", "sourceInstrumentId": "REG-022", "sourceInstrumentName": "Public Procurement Regulations", "ruleName": "Beneficial ownership review", "machineExpression": "bidder.beneficialOwner.overlap == true -> enhancedReview.required == true", "explanation": "Overlapping beneficial ownership requires enhanced review and documented conflict assessment.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "4 hours", "recipientRole": "Procurement Review Officer", "action": "Request missing evidence and record alternative explanations" },
+      { "level": 2, "after": "2 business days", "recipientRole": "Public Procurement Authority Review Lead", "action": "Open compliance case or approve supported closure" },
+      { "level": 3, "after": "5 business days", "recipientRole": "Anti-Corruption or Financial Crime Authority", "action": "Refer the signal with evidence and preserve chain of custody" }
+    ]
+  },
+  {
+    "id": "WF-007",
+    "workflowCode": "ASSET-REGISTRATION",
+    "workflowName": "Asset Registration and Acceptance",
+    "triggerType": "Event",
+    "eventNames": ["ProjectCompleted", "ContractAccepted", "AssetTransferred", "CapitalPaymentReconciled"],
+    "trigger": "ProjectCompleted or ContractAccepted or AssetTransferred or CapitalPaymentReconciled",
+    "schedule": "",
+    "escalationTrigger": "Completed project has no accepted asset record after 10 business days",
+    "escalationOwner": "Institutional Asset Controller",
+    "purpose": "Create and accept a public asset record after construction, acquisition or transfer, verify its location and assign an accountable operating institution.",
+    "institution": "Owning institution, accounting officer and responsible operating institution",
+    "ownerRole": "Institutional Asset Controller",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Assets", "Registration", "Acceptance", "Capital Projects", "Event Driven"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Receive completion or transfer event", "explanation": "Start asset registration from an accepted project, contract, transfer or reconciled capital payment event.", "responsibleRole": "Institutional Asset Controller", "requiredEvidence": "Completion certificate, transfer record or reconciled payment", "completionEvent": "AssetRegistrationStarted" },
+      { "order": 2, "name": "Validate asset facts and location", "explanation": "Confirm the asset identity, specification, jurisdiction, GPS location, ownership and supporting evidence.", "responsibleRole": "Asset Verification Officer", "requiredEvidence": "GIS record, inspection evidence and technical specification", "completionEvent": "AssetFactsValidated" },
+      { "order": 3, "name": "Assign ownership and operation", "explanation": "Record the owning institution, responsible operator, maintenance institution, service links and applicable roles.", "responsibleRole": "Accounting Officer", "requiredEvidence": "Ownership decision and operating responsibility assignment", "completionEvent": "AssetAccountabilityAssigned" },
+      { "order": 4, "name": "Approve operational acceptance", "explanation": "Approve the asset for operational use and activate its maintenance, inspection and service performance schedule.", "responsibleRole": "Accounting Officer", "requiredEvidence": "Approved acceptance decision and asset register record", "completionEvent": "AssetAccepted" }
+    ],
+    "rules": [
+      { "id": "WFR-011", "sourceInstrumentId": "LAW-014", "sourceInstrumentName": "Public Finance Management Act", "ruleName": "Capital asset evidence", "machineExpression": "asset.status = 'Operational' -> asset.acceptanceEvidence.count > 0 && asset.ownerInstitution != null", "explanation": "An asset cannot become operational without acceptance evidence and an accountable owner.", "status": "Active" },
+      { "id": "WFR-012", "sourceInstrumentId": "POL-001", "sourceInstrumentName": "National Digital Government Policy", "ruleName": "Location verification", "machineExpression": "asset.status = 'Operational' -> asset.geo.latitude != null && asset.geo.longitude != null", "explanation": "Operational public assets must have a verifiable geographic record where location is applicable.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "5 business days", "recipientRole": "Asset Verification Officer", "action": "Request missing evidence and correct the asset record" },
+      { "level": 2, "after": "10 business days", "recipientRole": "Institutional Asset Controller", "action": "Escalate unaccepted asset to the accounting officer" },
+      { "level": 3, "after": "20 business days", "recipientRole": "National Treasury Asset Governance Lead", "action": "Open a capital asset control exception" }
+    ]
+  },
+  {
+    "id": "WF-008",
+    "workflowCode": "ASSET-MAINTENANCE",
+    "workflowName": "Preventive Asset Maintenance Planning",
+    "triggerType": "Scheduled",
+    "eventNames": ["InspectionCompleted", "ConditionChanged", "WarrantyExpiring"],
+    "trigger": "Scheduled daily scan or InspectionCompleted or ConditionChanged or WarrantyExpiring",
+    "schedule": "Every day at 05:30 Africa/Johannesburg",
+    "escalationTrigger": "Maintenance due date passed or critical asset remains without an approved work order",
+    "escalationOwner": "Institutional Maintenance Manager",
+    "purpose": "Detect due maintenance, create funded work orders, preserve evidence and prevent asset condition or service availability from deteriorating.",
+    "institution": "Owning institution, operating institution and maintenance service provider",
+    "ownerRole": "Institutional Maintenance Manager",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Assets", "Maintenance", "Scheduled", "Service Continuity"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Detect maintenance due", "explanation": "Identify assets approaching or passing their inspection, warranty or preventive maintenance date.", "responsibleRole": "Asset Maintenance Scheduler", "requiredEvidence": "Maintenance schedule and asset condition history", "completionEvent": "MaintenanceDueDetected" },
+      { "order": 2, "name": "Assess condition and priority", "explanation": "Assess service criticality, safety, condition, cost and public impact to determine maintenance priority.", "responsibleRole": "Maintenance Engineer", "requiredEvidence": "Condition assessment and priority decision", "completionEvent": "MaintenancePrioritySet" },
+      { "order": 3, "name": "Approve work order and funding", "explanation": "Confirm funding, procurement method, supplier or internal team and the approved maintenance scope.", "responsibleRole": "Accounting Officer", "requiredEvidence": "Approved work order, budget and procurement record", "completionEvent": "MaintenanceWorkOrderApproved" },
+      { "order": 4, "name": "Complete and verify maintenance", "explanation": "Complete the work, capture before-and-after evidence, verify condition and set the next maintenance date.", "responsibleRole": "Maintenance Inspector", "requiredEvidence": "Work completion, inspection and updated asset condition", "completionEvent": "MaintenanceCompleted" }
+    ],
+    "rules": [
+      { "id": "WFR-013", "sourceInstrumentId": "POL-001", "sourceInstrumentName": "National Digital Government Policy", "ruleName": "Critical service maintenance", "machineExpression": "asset.serviceCriticality = 'Critical' && asset.maintenanceDue <= today + 30.days -> workOrder.priority = 'High'", "explanation": "Critical public services require earlier and higher-priority maintenance planning.", "status": "Active" },
+      { "id": "WFR-014", "sourceInstrumentId": "LAW-020", "sourceInstrumentName": "Public Procurement Act", "ruleName": "Maintenance procurement control", "machineExpression": "workOrder.externalSupplier = true -> procurement.method in approvedMethods", "explanation": "External maintenance must follow the applicable procurement method and threshold controls.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "1 day overdue", "recipientRole": "Institutional Maintenance Manager", "action": "Assign work order and publish the expected completion date" },
+      { "level": 2, "after": "5 business days overdue", "recipientRole": "Responsible Institution Director", "action": "Review funding, supplier and capacity constraints" },
+      { "level": 3, "after": "10 business days overdue", "recipientRole": "Accounting Officer", "action": "Escalate material service and safety risk for intervention" }
+    ]
+  },
+  {
+    "id": "WF-009",
+    "workflowCode": "ASSET-INSPECTION",
+    "workflowName": "Asset Inspection and Condition Review",
+    "triggerType": "Scheduled",
+    "eventNames": ["AuditInspectionRequested", "MaterialConditionChange", "RedFlagRaised"],
+    "trigger": "Scheduled risk-based review or AuditInspectionRequested or MaterialConditionChange or RedFlagRaised",
+    "schedule": "Monthly for high-risk assets; quarterly for standard assets",
+    "escalationTrigger": "Inspection is overdue or evidence indicates an unsafe, missing or materially impaired asset",
+    "escalationOwner": "Institutional Assurance Lead",
+    "purpose": "Independently verify asset existence, location, condition, utilisation and continued service value.",
+    "institution": "Owning institution, government agent, regulator and assurance institution",
+    "ownerRole": "Asset Inspection Lead",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Assets", "Inspection", "GIS", "Assurance", "Scheduled"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Create risk-based inspection task", "explanation": "Select assets based on value, age, condition, service criticality, complaints and statutory inspection frequency.", "responsibleRole": "Asset Inspection Lead", "requiredEvidence": "Inspection task, risk score and assignment", "completionEvent": "AssetInspectionTaskCreated" },
+      { "order": 2, "name": "Capture field and GIS evidence", "explanation": "Verify location, existence, condition, utilisation and safety with photographs, measurements and geospatial evidence.", "responsibleRole": "Government Agent Operations Officer", "requiredEvidence": "Inspection report, GPS record, photographs and measurements", "completionEvent": "AssetInspectionEvidenceCaptured" },
+      { "order": 3, "name": "Review findings and exceptions", "explanation": "Compare field findings with the registry, financial records, project evidence and previous inspection history.", "responsibleRole": "Regulatory Assurance Officer", "requiredEvidence": "Finding assessment and exception classification", "completionEvent": "AssetInspectionReviewed" },
+      { "order": 4, "name": "Approve condition and action", "explanation": "Approve the condition rating and initiate maintenance, incident, investigation, impairment or registry correction action.", "responsibleRole": "Institutional Assurance Lead", "requiredEvidence": "Approved condition rating and action decision", "completionEvent": "AssetConditionDecisioned" }
+    ],
+    "rules": [
+      { "id": "WFR-015", "sourceInstrumentId": "POL-001", "sourceInstrumentName": "National Digital Government Policy", "ruleName": "Evidence provenance", "machineExpression": "inspection.completed = true -> inspection.gps != null && inspection.inspector != null && inspection.evidence.count > 0", "explanation": "An inspection requires attributable, location-aware evidence before it can be accepted.", "status": "Active" },
+      { "id": "WFR-016", "sourceInstrumentId": "LAW-014", "sourceInstrumentName": "Public Finance Management Act", "ruleName": "Material impairment review", "machineExpression": "asset.conditionRating <= 2 || asset.exists = false -> impairmentOrInvestigation.required = true", "explanation": "Material impairment or a missing asset requires a controlled financial or assurance review.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "2 business days", "recipientRole": "Asset Inspection Lead", "action": "Reassign overdue inspection and request evidence" },
+      { "level": 2, "after": "5 business days", "recipientRole": "Institutional Assurance Lead", "action": "Escalate missing, unsafe or materially impaired asset" },
+      { "level": 3, "after": "10 business days", "recipientRole": "Auditor-General or relevant regulator", "action": "Refer unresolved material finding with evidence chain" }
+    ]
+  },
+  {
+    "id": "WF-010",
+    "workflowCode": "BUDGET-ALLOCATION",
+    "workflowName": "Budget Allocation and Approval",
+    "triggerType": "Event",
+    "eventNames": ["AppropriationApproved", "ProgrammeApproved", "ProjectFundingRequested"],
+    "trigger": "AppropriationApproved or ProgrammeApproved or ProjectFundingRequested",
+    "schedule": "Annual budget preparation and quarterly review",
+    "purpose": "Create a controlled budget allocation linked to a lawful mandate, programme, project and outcome.",
+    "institution": "National Treasury and responsible institution",
+    "ownerRole": "Accounting Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Budget", "Appropriation", "Approval", "Event Driven"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-011",
+    "workflowCode": "BUDGET-ADJUSTMENT",
+    "workflowName": "Budget Adjustment and Reallocation",
+    "triggerType": "Event",
+    "eventNames": ["BudgetAdjustmentRequested", "ProjectScopeChanged", "AppropriationChanged"],
+    "trigger": "BudgetAdjustmentRequested or ProjectScopeChanged or AppropriationChanged",
+    "schedule": "Monthly forecast versus actual review",
+    "purpose": "Control changes to approved budget lines, programmes, projects and institutions.",
+    "institution": "National Treasury and institutional finance office",
+    "ownerRole": "Finance Manager",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Budget", "Adjustment", "Reallocation", "Governance"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-012",
+    "workflowCode": "FUNDING-RELEASE",
+    "workflowName": "Funding Release and Transfer",
+    "triggerType": "Scheduled",
+    "eventNames": ["AllocationApproved", "ReleaseMilestoneReached"],
+    "trigger": "Scheduled release calendar or AllocationApproved or ReleaseMilestoneReached",
+    "schedule": "Weekly or monthly release calendar",
+    "purpose": "Release approved funding after cash, reporting, bank and control conditions are validated.",
+    "institution": "National Treasury and receiving institution",
+    "ownerRole": "Treasury Funding Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Funding", "Release", "Scheduled", "Treasury"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-013",
+    "workflowCode": "BUDGET-COMMITMENT",
+    "workflowName": "Commitment and Obligation Control",
+    "triggerType": "Event",
+    "eventNames": ["ProcurementAwardApproved", "ContractActivated", "PurchaseOrderCreated"],
+    "trigger": "ProcurementAwardApproved or ContractActivated or PurchaseOrderCreated",
+    "schedule": "Daily scan for commitments without budget reservation",
+    "purpose": "Prevent commitments from exceeding available budget or bypassing procurement and approval controls.",
+    "institution": "Responsible institution procurement and finance offices",
+    "ownerRole": "Finance Control Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Budget", "Commitment", "Procurement", "Event Driven"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-014",
+    "workflowCode": "BUDGET-EXCEPTION",
+    "workflowName": "Budget Exception and Escalation",
+    "triggerType": "Scheduled",
+    "eventNames": ["BudgetControlFailed", "PaymentReconciliationFailed"],
+    "trigger": "Scheduled exception scan or BudgetControlFailed or PaymentReconciliationFailed",
+    "schedule": "Daily scan and weekly unresolved-exception escalation",
+    "purpose": "Identify and resolve overspend, stale funding, unreconciled payments and unsupported expenditure.",
+    "institution": "Institutional finance office, National Treasury and assurance body",
+    "ownerRole": "Institutional Finance Director",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Budget", "Exception", "Assurance", "Scheduled"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-015",
+    "workflowCode": "BUDGET-CLOSURE",
+    "workflowName": "Financial Year Closure and Carry-Forward",
+    "triggerType": "Scheduled",
+    "eventNames": ["FinancialYearCloseStarted"],
+    "trigger": "FinancialYearCloseStarted or financial-year closure calendar",
+    "schedule": "Financial year closure calendar",
+    "purpose": "Close allocations and control returns, accruals, commitments and approved carry-forwards.",
+    "institution": "National Treasury and institutional accounting office",
+    "ownerRole": "Accounting Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Budget", "Closure", "Carry Forward", "Scheduled"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-016", "workflowCode": "PAYMENT-EVIDENCE-CONFORMANCE", "workflowName": "Payment Evidence and Match Review", "triggerType": "Event", "eventNames": ["InvoiceValidated", "DeliveryEvidenceAccepted"], "trigger": "InvoiceValidated or DeliveryEvidenceAccepted", "schedule": "Daily scan for payments without complete evidence", "purpose": "Verify invoice, contract, delivery and acceptance evidence before payment approval.", "institution": "Responsible institution finance and assurance functions", "ownerRole": "Finance Control Officer", "status": "Active", "version": "1.0", "tags": ["Payments", "Evidence", "Event Driven"], "lastReviewed": "2026-09-26T00:00:00", "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-017", "workflowCode": "PAYMENT-BUDGET-CONFORMANCE", "workflowName": "Payment Budget and Appropriation Review", "triggerType": "Event", "eventNames": ["BudgetMatchCompleted", "PaymentApprovalRequested"], "trigger": "BudgetMatchCompleted or PaymentApprovalRequested", "schedule": "Daily scan for payments without budget evidence", "purpose": "Verify available appropriation, lawful purpose and commitment before payment approval.", "institution": "National Treasury and responsible institution", "ownerRole": "Budget Control Officer", "status": "Active", "version": "1.0", "tags": ["Payments", "Budget", "Appropriation"], "lastReviewed": "2026-09-26T00:00:00", "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-018", "workflowCode": "PAYMENT-SEGREGATION-REVIEW", "workflowName": "Payment Segregation-of-Duties Review", "triggerType": "Event", "eventNames": ["PaymentApprovalRequested", "SupplierBankAccountChanged"], "trigger": "PaymentApprovalRequested or SupplierBankAccountChanged", "schedule": "Daily review of approval-role overlaps", "purpose": "Detect preparation, supplier-account maintenance, approval and reconciliation role conflicts.", "institution": "Responsible institution and assurance function", "ownerRole": "Internal Control Officer", "status": "Active", "version": "1.0", "tags": ["Payments", "Segregation", "Control"], "lastReviewed": "2026-09-26T00:00:00", "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-019", "workflowCode": "PAYMENT-SETTLEMENT-MONITORING", "workflowName": "Payment Settlement Monitoring", "triggerType": "Scheduled", "eventNames": ["PaymentInstructionSubmitted", "BankSettlementReceived"], "trigger": "PaymentInstructionSubmitted or BankSettlementReceived", "schedule": "Hourly monitoring and daily overdue scan", "purpose": "Monitor payment instructions through bank settlement and identify overdue or failed settlement events.", "institution": "Treasury, banking interface and responsible institution", "ownerRole": "Treasury Settlement Officer", "status": "Active", "version": "1.0", "tags": ["Payments", "Settlement", "Scheduled"], "lastReviewed": "2026-09-26T00:00:00", "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-020", "workflowCode": "PAYMENT-EXCEPTION", "workflowName": "Payment Exception and Escalation", "triggerType": "Scheduled", "eventNames": ["BudgetControlFailed", "PaymentHeld", "PaymentRejected"], "trigger": "Daily exception scan or BudgetControlFailed or PaymentHeld or PaymentRejected", "schedule": "Daily scan and weekly unresolved-exception escalation", "purpose": "Classify, assign, escalate and close payment control exceptions with an evidence trail.", "institution": "Institutional finance, Treasury and assurance body", "ownerRole": "Institutional Finance Director", "status": "Active", "version": "1.0", "tags": ["Payments", "Exception", "Escalation"], "lastReviewed": "2026-09-26T00:00:00", "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-021", "workflowCode": "PAYMENT-DUPLICATE-REVIEW", "workflowName": "Duplicate Payment and Invoice Review", "triggerType": "Event", "eventNames": ["DuplicateSignalCreated", "InvoiceReceived"], "trigger": "DuplicateSignalCreated or InvoiceReceived", "schedule": "Daily duplicate-pattern scan", "purpose": "Review duplicate, split, unusual or unsupported payment signals before execution or close-out.", "institution": "Responsible institution internal audit and finance control", "ownerRole": "Internal Audit Manager", "status": "Active", "version": "1.0", "tags": ["Payments", "Duplicate", "Red Flags"], "lastReviewed": "2026-09-26T00:00:00", "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-022", "workflowCode": "PAYMENT-RECOVERY", "workflowName": "Payment Recovery or Reversal Oversight", "triggerType": "Event", "eventNames": ["RecoveryOpened", "PaymentReversed"], "trigger": "RecoveryOpened or PaymentReversed", "schedule": "Weekly recovery ageing review", "purpose": "Monitor recovery, reversal, notification, accounting and evidence requirements for an irregular payment.", "institution": "Responsible institution, Treasury and legal or assurance function", "ownerRole": "Accounting Officer", "status": "Active", "version": "1.0", "tags": ["Payments", "Recovery", "Assurance"], "lastReviewed": "2026-09-26T00:00:00", "steps": [], "rules": [], "escalations": []
+  },
+  {
+    "id": "WF-023", "workflowCode": "PAYMENT-CLOSE-OUT", "workflowName": "Payment Close-Out and Audit Retention", "triggerType": "Event", "eventNames": ["PaymentReconciled", "CloseOutReviewRequested", "AuditRetentionDue"], "trigger": "PaymentReconciled or CloseOutReviewRequested or AuditRetentionDue", "schedule": "Monthly close-out completeness scan", "escalationTrigger": "Close-out evidence, outcome linkage or retention package remains incomplete after the control SLA", "escalationOwner": "Institutional Finance Director and Records Assurance Lead", "purpose": "Confirm reconciliation, evidence retention, outcome linkage and final payment oversight conclusion without changing the source payment record.", "institution": "Responsible institution finance, National Treasury and records assurance functions", "ownerRole": "Records and Assurance Officer", "status": "Active", "version": "1.1", "tags": ["Payments", "Close Out", "Audit", "Evidence", "Executable"], "lastReviewed": "2026-09-26T00:00:00", "steps": [
+      { "order": 1, "name": "Confirm payment reconciliation", "explanation": "Verify that the payment, ledger, bank settlement and supplier references agree and that any variance is resolved or formally classified.", "responsibleRole": "Reconciliation Officer", "requiredEvidence": "Payment record, ledger entry, bank settlement and reconciliation statement", "completionEvent": "PaymentReconciliationConfirmed" },
+      { "order": 2, "name": "Validate final evidence package", "explanation": "Confirm that invoice, contract, procurement, delivery, acceptance and approval evidence is indexed and attributable.", "responsibleRole": "Finance Control Officer", "requiredEvidence": "Indexed payment evidence package and acceptance reference", "completionEvent": "PaymentEvidencePackageValidated" },
+      { "order": 3, "name": "Link payment to outcome", "explanation": "Connect the payment to its programme, project, milestone and intended public outcome for traceability.", "responsibleRole": "Programme Performance Officer", "requiredEvidence": "Programme, project, milestone and outcome references", "completionEvent": "PaymentOutcomeLinkConfirmed" },
+      { "order": 4, "name": "Apply retention classification", "explanation": "Assign the approved records-retention class, preserve the immutable evidence index and record the retention owner and review date.", "responsibleRole": "Records and Assurance Officer", "requiredEvidence": "Retention classification, evidence index and custody record", "completionEvent": "PaymentRetentionPackageRegistered" },
+      { "order": 5, "name": "Issue close-out conclusion", "explanation": "Record a passed, exception or escalated oversight conclusion and route unresolved findings to the accountable authority.", "responsibleRole": "Institutional Finance Director", "requiredEvidence": "Close-out conclusion, exceptions and approval decision", "completionEvent": "PaymentCloseOutCompleted" }
+    ], "rules": [
+      { "id": "WFR-023-001", "sourceInstrumentId": "LAW-014", "sourceInstrumentName": "Public Finance Management Act", "ruleName": "Reconciliation required", "machineExpression": "payment.status = 'Reconciled' -> payment.reconciliationEvidence.count > 0", "explanation": "A payment cannot be closed out without attributable reconciliation evidence.", "status": "Active" },
+      { "id": "WFR-023-002", "sourceInstrumentId": "LAW-014", "sourceInstrumentName": "Public Finance Management Act", "ruleName": "Outcome linkage required", "machineExpression": "payment.status = 'Reconciled' -> payment.outcomeLink.projectId != null && payment.outcomeLink.programmeId != null", "explanation": "A reconciled payment must remain traceable to the approved programme and project outcome.", "status": "Active" },
+      { "id": "WFR-023-003", "sourceInstrumentId": "LAW-014", "sourceInstrumentName": "Public Finance Management Act", "ruleName": "Audit retention package", "machineExpression": "payment.closeOut.status = 'Complete' -> payment.auditPackage.indexed == true && payment.auditPackage.retentionClass != null", "explanation": "The close-out package must be indexed and assigned an approved retention class before completion.", "status": "Active" },
+      { "id": "WFR-023-004", "sourceInstrumentId": "LAW-014", "sourceInstrumentName": "Public Finance Management Act", "ruleName": "Exception escalation", "machineExpression": "payment.closeOut.status = 'Exception' -> payment.closeOut.escalationRequired == true && payment.closeOut.ownerRole != null", "explanation": "Every close-out exception requires an accountable owner and an escalation route.", "status": "Active" }
+    ], "escalations": [
+      { "level": 1, "after": "2 business days", "recipientRole": "Records and Assurance Officer", "action": "Request missing reconciliation, evidence or retention metadata and set a due date" },
+      { "level": 2, "after": "5 business days", "recipientRole": "Institutional Finance Director", "action": "Review unresolved close-out exception and approve a corrective action" },
+      { "level": 3, "after": "10 business days", "recipientRole": "National Treasury or Auditor-General liaison", "action": "Escalate material unresolved payment close-out finding with the evidence chain" }
+    ]
+  },
+  {
+    "id": "WF-024",
+    "workflowCode": "WATER-CATCHMENT-OVERSIGHT",
+    "workflowName": "Water Catchment Licensing and Service Resilience",
+    "triggerType": "Event",
+    "eventNames": ["WaterPermitApplicationReceived", "CatchmentLevelChanged", "WaterQualityAlertRaised", "ServiceOutageReported"],
+    "trigger": "WaterPermitApplicationReceived or CatchmentLevelChanged or WaterQualityAlertRaised or ServiceOutageReported",
+    "schedule": "Daily catchment and service-risk scan",
+    "escalationTrigger": "Permit, water-quality or service-resilience exception remains unresolved beyond the response SLA",
+    "escalationOwner": "National Water Management Authority Director and Environmental Regulator",
+    "purpose": "Monitor lawful water-resource decisions, catchment condition, water quality, service resilience and evidence of corrective action.",
+    "institution": "National Water Management Authority, responsible water utilities, local authorities and environmental regulator",
+    "ownerRole": "Catchment Compliance and Service Resilience Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Water", "Catchment", "Licensing", "Quality", "Service Resilience", "Event Driven"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Register water signal", "explanation": "Register the permit, catchment, quality or outage signal with location, source and affected service context.", "responsibleRole": "Water Intelligence Analyst", "requiredEvidence": "Source event, location and affected catchment or service record", "completionEvent": "WaterSignalRegistered" },
+      { "order": 2, "name": "Assess lawful and environmental impact", "explanation": "Assess permit status, environmental conditions, downstream users, water quality and service impact.", "responsibleRole": "Catchment Compliance Officer", "requiredEvidence": "Permit, environmental assessment, monitoring result and impact assessment", "completionEvent": "WaterImpactAssessed" },
+      { "order": 3, "name": "Assign corrective intervention", "explanation": "Assign the responsible institution and corrective action, including public-service continuity measures where required.", "responsibleRole": "Water Operations Director", "requiredEvidence": "Approved intervention, accountable owner and target date", "completionEvent": "WaterInterventionAssigned" },
+      { "order": 4, "name": "Verify resolution and report", "explanation": "Verify evidence of resolution, update the catchment or service record and report unresolved material risks.", "responsibleRole": "Regulatory Assurance Officer", "requiredEvidence": "Verification report, monitoring result and closure decision", "completionEvent": "WaterRiskClosed" }
+    ],
+    "rules": [
+      { "id": "WFR-024-001", "sourceInstrumentId": "LAW-031", "sourceInstrumentName": "Environmental Management Act", "ruleName": "Environmental assessment required", "machineExpression": "waterProject.impactLevel in ['High', 'Material'] -> environmentalAssessment.status = 'Approved'", "explanation": "Material water-resource activities require an approved environmental assessment before implementation.", "status": "Active" },
+      { "id": "WFR-024-002", "sourceInstrumentId": "LAW-031", "sourceInstrumentName": "Environmental Management Act", "ruleName": "Water-quality exception", "machineExpression": "waterQuality.result = 'BelowStandard' -> intervention.required = true && escalationRequired = true", "explanation": "A below-standard water-quality result requires a corrective intervention and escalation route.", "status": "Active" },
+      { "id": "WFR-024-003", "sourceInstrumentId": "LAW-014", "sourceInstrumentName": "Public Finance Management Act", "ruleName": "Intervention funding traceability", "machineExpression": "intervention.funded = true -> intervention.budgetCode != null && intervention.approvalEvidence.count > 0", "explanation": "Publicly funded corrective interventions must remain linked to an approved budget and evidence.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "1 business day", "recipientRole": "Catchment Compliance Officer", "action": "Validate the water signal and assign the responsible institution" },
+      { "level": 2, "after": "3 business days", "recipientRole": "Water Operations Director", "action": "Approve corrective action and service continuity response" },
+      { "level": 3, "after": "7 business days", "recipientRole": "Environmental Regulator or Permanent Secretary", "action": "Escalate material environmental or public-service risk" }
+    ]
+  },
+  {
+    "id": "WF-025",
+    "workflowCode": "FOREST-MANAGEMENT-COMPLIANCE",
+    "workflowName": "Forest Management, Permit and Restoration Oversight",
+    "triggerType": "Event",
+    "eventNames": ["ForestPermitIssued", "HarvestActivityReported", "DeforestationAlertRaised", "RestorationMilestoneDue"],
+    "trigger": "ForestPermitIssued or HarvestActivityReported or DeforestationAlertRaised or RestorationMilestoneDue",
+    "schedule": "Weekly satellite, permit and restoration-monitoring scan",
+    "escalationTrigger": "Unauthorised clearing, permit non-conformance or restoration milestone remains unresolved",
+    "escalationOwner": "Forestry Department Director and Environmental Regulator",
+    "purpose": "Monitor forest permits, lawful harvesting, geospatial evidence, community safeguards, restoration commitments and environmental outcomes.",
+    "institution": "Forestry Department, local authorities, traditional authorities, environmental regulator and assurance institutions",
+    "ownerRole": "Forest Compliance and Restoration Lead",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Forestry", "Land Use", "Permits", "GIS", "Restoration", "Event Driven"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Match activity to permit", "explanation": "Match the reported forest activity to the permit holder, approved area, activity type and validity period.", "responsibleRole": "Forest Licensing Officer", "requiredEvidence": "Permit, GIS boundary, activity report and operator identity", "completionEvent": "ForestActivityMatched" },
+      { "order": 2, "name": "Verify geospatial and community evidence", "explanation": "Verify satellite or field evidence, protected-area overlap, community consultation and reported area change.", "responsibleRole": "Forest Monitoring Officer", "requiredEvidence": "GIS evidence, field report, consultation record and imagery reference", "completionEvent": "ForestEvidenceVerified" },
+      { "order": 3, "name": "Assess restoration obligation", "explanation": "Determine restoration, rehabilitation, offset or enforcement obligations and assign measurable milestones.", "responsibleRole": "Forest Restoration Planner", "requiredEvidence": "Restoration plan, baseline, target and accountable institution", "completionEvent": "ForestRestorationPlanApproved" },
+      { "order": 4, "name": "Close or escalate finding", "explanation": "Close the finding when evidence meets the obligation or refer unresolved non-compliance for enforcement and assurance review.", "responsibleRole": "Forestry Department Director", "requiredEvidence": "Closure evidence, enforcement referral or approved exception", "completionEvent": "ForestComplianceDecisioned" }
+    ],
+    "rules": [
+      { "id": "WFR-025-001", "sourceInstrumentId": "LAW-031", "sourceInstrumentName": "Environmental Management Act", "ruleName": "Permit boundary compliance", "machineExpression": "forest.activity.reported = true -> forest.activity.withinPermitBoundary = true && forest.permit.status = 'Active'", "explanation": "Reported forest activity must occur within an active approved permit boundary.", "status": "Active" },
+      { "id": "WFR-025-002", "sourceInstrumentId": "LAW-031", "sourceInstrumentName": "Environmental Management Act", "ruleName": "Restoration evidence", "machineExpression": "forest.impactLevel = 'Material' -> restorationPlan.approved = true && restorationPlan.baselineEvidence.count > 0", "explanation": "Material forest impacts require an approved restoration plan supported by baseline evidence.", "status": "Active" },
+      { "id": "WFR-025-003", "sourceInstrumentId": "POL-001", "sourceInstrumentName": "National Digital Government Policy", "ruleName": "Geospatial provenance", "machineExpression": "forest.finding.status = 'Closed' -> forest.finding.gisEvidence.count > 0 && forest.finding.closedBy != null", "explanation": "A closed forest finding must retain geospatial provenance and an attributable decision-maker.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "2 business days", "recipientRole": "Forest Compliance Officer", "action": "Request permit, boundary or field evidence and assign a verification task" },
+      { "level": 2, "after": "5 business days", "recipientRole": "Forest Department Director", "action": "Suspend close-out and determine restoration or enforcement action" },
+      { "level": 3, "after": "10 business days", "recipientRole": "Environmental Regulator or Auditor-General liaison", "action": "Refer material unresolved forest non-compliance with the GIS evidence chain" }
+    ]
+  },
+  {
+    "id": "WF-026",
+    "workflowCode": "CARBON-CREDIT-INTEGRITY",
+    "workflowName": "Carbon Credit Project, MRV and Issuance Integrity",
+    "triggerType": "Event",
+    "eventNames": ["CarbonProjectRegistered", "MonitoringReportSubmitted", "VerificationCompleted", "CreditIssuanceRequested", "ReversalRiskRaised"],
+    "trigger": "CarbonProjectRegistered or MonitoringReportSubmitted or VerificationCompleted or CreditIssuanceRequested or ReversalRiskRaised",
+    "schedule": "Monthly monitoring, reporting and verification completeness scan",
+    "escalationTrigger": "Monitoring, verification, additionality, permanence or double-counting exception remains unresolved",
+    "escalationOwner": "National Carbon Registry Authority and Environmental Regulator",
+    "purpose": "Monitor carbon-credit project registration, measurement-reporting-verification evidence, additionality, permanence, registry integrity and public-benefit claims.",
+    "institution": "National Carbon Registry Authority, project developer, independent verifier, local communities and environmental regulator",
+    "ownerRole": "Carbon Registry Integrity Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Carbon Credits", "MRV", "Registry", "Climate", "Verification", "Event Driven"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Register carbon project", "explanation": "Register the project boundary, methodology, developer, tenure, safeguards and baseline before monitoring begins.", "responsibleRole": "Carbon Registry Officer", "requiredEvidence": "Project design document, GIS boundary, tenure and safeguards record", "completionEvent": "CarbonProjectRegistered" },
+      { "order": 2, "name": "Review monitoring report", "explanation": "Review measured activity data, baseline assumptions, leakage, permanence risks and community-benefit evidence.", "responsibleRole": "Carbon MRV Analyst", "requiredEvidence": "Monitoring report, calculation workbook, source measurements and safeguards evidence", "completionEvent": "CarbonMonitoringReviewed" },
+      { "order": 3, "name": "Confirm independent verification", "explanation": "Confirm that an authorised independent verifier reviewed the report and resolved material findings.", "responsibleRole": "Verification Assurance Officer", "requiredEvidence": "Verification statement, findings log and verifier accreditation", "completionEvent": "CarbonVerificationAccepted" },
+      { "order": 4, "name": "Check registry integrity", "explanation": "Check ownership, retirement status, double counting, issuance volume and linkage to the verified monitoring period.", "responsibleRole": "Carbon Registry Integrity Officer", "requiredEvidence": "Registry audit, serial-number range and ownership declaration", "completionEvent": "CarbonRegistryIntegrityConfirmed" },
+      { "order": 5, "name": "Issue or hold credits", "explanation": "Record an oversight conclusion to approve the registry workflow, hold issuance or escalate an integrity exception.", "responsibleRole": "National Carbon Registry Authority", "requiredEvidence": "Issuance decision, exception record and audit trail", "completionEvent": "CarbonCreditDecisioned" }
+    ],
+    "rules": [
+      { "id": "WFR-026-001", "sourceInstrumentId": "LAW-031", "sourceInstrumentName": "Environmental Management Act", "ruleName": "Approved project boundary", "machineExpression": "carbon.project.status = 'Registered' -> carbon.project.gisBoundary.count > 0 && carbon.project.safeguards.status = 'Approved'", "explanation": "A registered carbon project requires a defined boundary and approved environmental safeguards.", "status": "Active" },
+      { "id": "WFR-026-002", "sourceInstrumentId": "LAW-031", "sourceInstrumentName": "Environmental Management Act", "ruleName": "Independent verification", "machineExpression": "carbon.issuance.requested = true -> carbon.verification.status = 'Accepted' && carbon.verification.independentVerifier != null", "explanation": "Credits cannot proceed to issuance without accepted independent verification.", "status": "Active" },
+      { "id": "WFR-026-003", "sourceInstrumentId": "POL-001", "sourceInstrumentName": "National Digital Government Policy", "ruleName": "No double counting", "machineExpression": "carbon.issuance.requested = true -> carbon.registry.serialRange.overlap = false && carbon.claimedElsewhere = false", "explanation": "Registry issuance requires serial-number uniqueness and a declaration that the reduction is not claimed elsewhere.", "status": "Active" },
+      { "id": "WFR-026-004", "sourceInstrumentId": "LAW-014", "sourceInstrumentName": "Public Finance Management Act", "ruleName": "Public benefit traceability", "machineExpression": "carbon.project.publicFunding = true -> carbon.project.benefitReport.count > 0 && carbon.project.budgetCode != null", "explanation": "Publicly funded carbon projects require traceability from funding to reported public benefits.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "3 business days", "recipientRole": "Carbon MRV Analyst", "action": "Request missing monitoring, safeguard or registry evidence" },
+      { "level": 2, "after": "7 business days", "recipientRole": "Verification Assurance Officer", "action": "Place issuance request on hold and require independent review" },
+      { "level": 3, "after": "15 business days", "recipientRole": "National Carbon Registry Authority", "action": "Escalate material integrity, reversal or double-counting risk for formal decision" }
+    ]
+  }
+  ,{
+    "id": "WF-027",
+    "workflowCode": "LAND-MANAGEMENT-REGISTER",
+    "workflowName": "Zambia Integrated Land Management and Parcel Integrity",
+    "triggerType": "Event",
+    "eventNames": ["ParcelCreated", "BoundaryChanged", "LandUseChanged", "DisputeRegistered", "OfficialSearchRequested"],
+    "trigger": "ParcelCreated or BoundaryChanged or LandUseChanged or DisputeRegistered or OfficialSearchRequested",
+    "schedule": "Daily duplicate-interest and stale-record scan; quarterly parcel integrity review",
+    "escalationTrigger": "Parcel conflict, duplicate interest, missing survey evidence or unresolved land dispute exceeds its service-level target",
+    "escalationOwner": "Permanent Secretary — Lands and Natural Resources and Registrar of Lands",
+    "purpose": "Maintain an authoritative, geospatially verified, non-duplicative land record before allocation, transfer or title-deed issuance.",
+    "institution": "Ministry of Lands and Natural Resources, Lands and Deeds Registry, Survey Department, planning authorities, local authorities and traditional authorities",
+    "ownerRole": "Director of Land Administration",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Zambia", "Land Management", "Parcel Registry", "GIS", "Duplicate Prevention", "Event Driven"],
+    "participants": ["Ministry of Lands and Natural Resources", "Lands and Deeds Registry", "Survey Department", "Local Planning Authority", "Local Authority", "Traditional Authority", "Land Tribunal or dispute-resolution body", "Applicant or current holder", "Licensed surveyor", "Conveyancer", "Environmental regulator", "National Anti-Corruption Commission liaison", "Auditor-General liaison"],
+    "approvalAuthorities": ["Director of Land Administration", "Chief Surveyor", "Registrar of Lands", "Relevant planning authority", "Relevant traditional authority where customary land is involved"],
+    "requiredRegistries": ["National parcel registry", "Lands and Deeds Registry", "Survey and cadastral system", "Planning and zoning register", "Customary land register", "Dispute and cautions register"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Create or reconcile parcel identity", "explanation": "Assign a unique parcel identifier and reconcile coordinates, survey plan, tenure category, area and existing interests.", "responsibleRole": "Cadastral Records Officer", "requiredEvidence": "Unique parcel ID, survey plan, coordinates and parcel history", "completionEvent": "ParcelIdentityReconciled" },
+      { "order": 2, "name": "Run official search and conflict checks", "explanation": "Search registered interests, pending applications, cautions, disputes, duplicate identifiers, overlaps and restricted land layers.", "responsibleRole": "Lands Registry Search Officer", "requiredEvidence": "Official search, conflict report, cadastral overlap report and dispute check", "completionEvent": "LandConflictCheckCompleted" },
+      { "order": 3, "name": "Verify planning and environmental compatibility", "explanation": "Confirm zoning, planning permission, protected areas, environmental restrictions, infrastructure reservations and public-purpose constraints.", "responsibleRole": "Planning and Environmental Review Officer", "requiredEvidence": "Planning opinion, zoning extract, environmental clearance or exemption and restriction map", "completionEvent": "LandUseCompatibilityConfirmed" },
+      { "order": 4, "name": "Confirm lawful holder and consent chain", "explanation": "Confirm the lawful current holder, applicant identity, beneficial interest, required consents and absence of unresolved competing claims.", "responsibleRole": "Land Administration Legal Officer", "requiredEvidence": "Identity, consent chain, authority resolution, claim review and conflict declaration", "completionEvent": "LandHolderAndConsentConfirmed" },
+      { "order": 5, "name": "Approve registry update", "explanation": "Approve the parcel or land-interest update only after all mandatory checks pass and preserve the immutable decision record.", "responsibleRole": "Registrar of Lands", "requiredEvidence": "Approval decision, signed checklist and audit correlation ID", "completionEvent": "LandRegisterUpdateApproved" }
+    ],
+    "rules": [
+      { "id": "WFR-027-001", "sourceInstrumentId": "LAW-041", "sourceInstrumentName": "Zambia Lands and Deeds Registry Act", "ruleName": "Unique parcel and interest", "machineExpression": "land.interest.proposed = true -> registry.sameParcel.sameInterest.count = 0 && registry.parcelOverlap.status = 'Clear'", "explanation": "A proposed land interest must not duplicate an existing interest or overlap an incompatible registered parcel.", "status": "Active" },
+      { "id": "WFR-027-002", "sourceInstrumentId": "LAW-041", "sourceInstrumentName": "Zambia Lands and Deeds Registry Act", "ruleName": "Official search freshness", "machineExpression": "land.decision.status = 'Approved' -> officialSearch.completed = true && officialSearch.ageDays <= 30", "explanation": "Approval must rely on a recent official search rather than a stale registry snapshot.", "status": "Active" },
+      { "id": "WFR-027-003", "sourceInstrumentId": "LAW-042", "sourceInstrumentName": "Zambia Urban and Regional Planning Act", "ruleName": "Planning compatibility", "machineExpression": "land.use.proposed != null -> planning.zoningCompatible = true && planning.approvalRequired = false || planning.approval.status = 'Approved'", "explanation": "Proposed use must be compatible with planning controls or have the required planning approval.", "status": "Active" },
+      { "id": "WFR-027-004", "sourceInstrumentId": "LAW-040", "sourceInstrumentName": "Zambia Lands Act", "ruleName": "No unresolved competing claim", "machineExpression": "land.decision.status = 'Approved' -> land.competingClaims.open = 0 && land.caution.active = false", "explanation": "A land decision must not be approved while a competing claim or active caution remains unresolved.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "2 business days", "recipientRole": "Land Administration Legal Officer", "action": "Place the transaction on hold and request missing search, survey or consent evidence" },
+      { "level": 2, "after": "5 business days", "recipientRole": "Director of Land Administration", "action": "Convene registry, survey, planning and authority review of the conflict" },
+      { "level": 3, "after": "10 business days", "recipientRole": "Registrar of Lands and Permanent Secretary — Lands", "action": "Issue a controlled decision, dispute referral or investigation referral; prohibit duplicate allocation" }
+    ]
+  },
+  {
+    "id": "WF-028",
+    "workflowCode": "CUSTOMARY-LAND-ACQUISITION",
+    "workflowName": "Zambia Customary Land Consent, Conversion and Acquisition",
+    "triggerType": "Event",
+    "eventNames": ["CustomaryLandApplicationReceived", "TraditionalAuthorityConsentSubmitted", "ConversionRequested", "CustomaryClaimDisputed"],
+    "trigger": "CustomaryLandApplicationReceived or TraditionalAuthorityConsentSubmitted or ConversionRequested or CustomaryClaimDisputed",
+    "schedule": "Weekly customary-land application and consent-chain review",
+    "escalationTrigger": "Traditional consent, community consultation, compensation, resettlement, boundary or competing-claim issue remains unresolved",
+    "escalationOwner": "Commissioner of Lands and relevant Provincial Administration",
+    "purpose": "Ensure customary land acquisition or conversion is voluntary, documented, consultative, geospatially clear and not allocated to competing people.",
+    "institution": "Ministry of Lands and Natural Resources, traditional authority, local authority, district planning authority, community representatives, Survey Department, applicant, affected holders and environmental regulator",
+    "ownerRole": "Customary Land Administration Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Zambia", "Customary Land", "Consent", "Community", "Conversion", "Acquisition"],
+    "participants": ["Customary landholder or family", "Traditional council or chief", "Ministry of Lands and Natural Resources", "District and Provincial Administration", "Local authority", "Survey Department", "Planning authority", "Community representatives", "Affected neighbours", "Applicant or investor", "Valuer", "Environmental regulator", "Legal practitioner or conveyancer", "Compensation and resettlement officer", "Land Tribunal or dispute-resolution body"],
+    "approvalAuthorities": ["Traditional authority", "Community or affected-holder representatives", "Local planning authority", "Commissioner of Lands", "Registrar of Lands for registration", "Environmental authority where applicable"],
+    "requiredRegistries": ["Customary land register", "Cadastral system", "Lands and Deeds Registry", "Community consultation register", "Compensation and resettlement register", "Dispute and cautions register"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Register customary land application", "explanation": "Register the applicant, proposed use, affected area, traditional authority, community and preliminary parcel geometry without creating an allocation.", "responsibleRole": "Customary Land Administration Officer", "requiredEvidence": "Application, identity, proposed use, preliminary GIS boundary and affected-holder list", "completionEvent": "CustomaryApplicationRegistered" },
+      { "order": 2, "name": "Confirm customary holder and community consultation", "explanation": "Confirm the existing customary holder or holders and document transparent consultation, objections, vulnerable-group participation and community resolution.", "responsibleRole": "Traditional Council Secretary", "requiredEvidence": "Customary-holder confirmation, meeting notices, attendance, minutes, objections and resolution", "completionEvent": "CustomaryConsultationCompleted" },
+      { "order": 3, "name": "Survey and duplicate-allocation search", "explanation": "Complete the survey and search customary, cadastral, registry, planning and dispute records to prevent an overlapping or second allocation.", "responsibleRole": "Chief Surveyor or Licensed Surveyor", "requiredEvidence": "Approved survey plan, unique parcel ID, overlap report and official search", "completionEvent": "CustomaryParcelCleared" },
+      { "order": 4, "name": "Assess compensation, resettlement and safeguards", "explanation": "Assess compensation, livelihood impact, resettlement, environmental impact and public-interest conditions before approval.", "responsibleRole": "Compensation and Safeguards Officer", "requiredEvidence": "Valuation, compensation agreement, resettlement plan and environmental decision", "completionEvent": "CustomarySafeguardsApproved" },
+      { "order": 5, "name": "Approve conversion or acquisition", "explanation": "Record the traditional consent and statutory approval chain; do not issue a title or conversion decision while any objection or claim is unresolved.", "responsibleRole": "Commissioner of Lands", "requiredEvidence": "Traditional consent, statutory approval, objection resolution and signed decision", "completionEvent": "CustomaryConversionApproved" },
+      { "order": 6, "name": "Register resulting interest", "explanation": "Register the approved interest with a unique parcel and title reference only after the registry re-check confirms no intervening allocation.", "responsibleRole": "Registrar of Lands", "requiredEvidence": "Final survey, approval decision, registry re-check and registration record", "completionEvent": "CustomaryInterestRegistered" }
+    ],
+    "rules": [
+      { "id": "WFR-028-001", "sourceInstrumentId": "LAW-040", "sourceInstrumentName": "Zambia Lands Act", "ruleName": "Traditional consent chain", "machineExpression": "customary.conversion.requested = true -> customary.holder.confirmed = true && traditionalAuthority.consent = 'Recorded'", "explanation": "Customary conversion requires verified holder information and recorded traditional-authority consent.", "status": "Active" },
+      { "id": "WFR-028-002", "sourceInstrumentId": "LAW-040", "sourceInstrumentName": "Zambia Lands Act", "ruleName": "Community objections resolved", "machineExpression": "customary.approval.requested = true -> customary.objections.open = 0 && customary.competingClaims.open = 0", "explanation": "Approval must not proceed while community objections or competing claims remain open.", "status": "Active" },
+      { "id": "WFR-028-003", "sourceInstrumentId": "LAW-041", "sourceInstrumentName": "Zambia Lands and Deeds Registry Act", "ruleName": "No duplicate allocation", "machineExpression": "customary.interest.registered = true -> registry.uniqueParcelId.count = 1 && registry.sameApplicant.sameParcel.openApplications = 0", "explanation": "The registry must confirm one unique parcel interest and no competing application for the same applicant and parcel.", "status": "Active" },
+      { "id": "WFR-028-004", "sourceInstrumentId": "LAW-031", "sourceInstrumentName": "Environmental Management Act", "ruleName": "Environmental safeguards", "machineExpression": "customary.proposedUse.impactLevel = 'Material' -> environmentalDecision.status = 'Approved'", "explanation": "Material land-use impacts require an environmental decision before conversion or acquisition approval.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "3 business days", "recipientRole": "Customary Land Administration Officer", "action": "Suspend processing and request missing consent, consultation, survey or claim evidence" },
+      { "level": 2, "after": "7 business days", "recipientRole": "Provincial Lands Officer and Traditional Authority", "action": "Convene a documented community, survey and dispute-resolution review" },
+      { "level": 3, "after": "15 business days", "recipientRole": "Commissioner of Lands", "action": "Reject, refer or approve with recorded safeguards; block any duplicate allocation or title request" }
+    ]
+  },
+  {
+    "id": "WF-029",
+    "workflowCode": "STATE-LAND-TITLE-ISSUANCE",
+    "workflowName": "Zambia State Land Allocation, Lease and Title-Deed Issuance",
+    "triggerType": "Event",
+    "eventNames": ["StateLandApplicationReceived", "AllocationApprovalRequested", "LeaseExecuted", "TitleDeedRequested", "TransferRequested"],
+    "trigger": "StateLandApplicationReceived or AllocationApprovalRequested or LeaseExecuted or TitleDeedRequested or TransferRequested",
+    "schedule": "Daily state-land allocation, lease and title-deed control scan",
+    "escalationTrigger": "Duplicate interest, incomplete approval, unpaid required charges, missing survey, title conflict or unauthorised transfer is detected",
+    "escalationOwner": "Commissioner of Lands and Registrar of Lands",
+    "purpose": "Control state-land allocation and title-deed issuance through transparent approval, verified survey, official search, planning compliance and non-duplication checks.",
+    "institution": "Ministry of Lands and Natural Resources, Commissioner of Lands, Lands and Deeds Registry, Survey Department, local planning authority, valuation office, applicant, conveyancer, environmental regulator and public-accountability bodies",
+    "ownerRole": "State Land Allocation and Registration Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Zambia", "State Land", "Allocation", "Lease", "Title Deed", "Registry", "Duplicate Prevention"],
+    "participants": ["Applicant", "Ministry of Lands and Natural Resources", "Commissioner of Lands", "State Land Allocation Committee", "Survey Department", "Lands and Deeds Registry", "Local authority and planning authority", "Government valuer", "Environmental regulator", "Conveyancer", "Financial institution where mortgaged", "Affected neighbours or objectors", "Auditor-General liaison", "Anti-Corruption Commission liaison"],
+    "approvalAuthorities": ["State Land Allocation Committee", "Commissioner of Lands", "Local planning authority", "Chief Surveyor", "Registrar of Lands", "Environmental authority where applicable"],
+    "requiredRegistries": ["State land inventory", "Cadastral and survey register", "Lands and Deeds Registry", "Planning and zoning register", "Official search and cautions register", "Lease and ground-rent register", "Title-deed issuance register"],
+    "lastReviewed": "2026-09-26T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Register and screen application", "explanation": "Register the applicant, intended use, eligibility, beneficial ownership, parcel request and conflict declarations without reserving land prematurely.", "responsibleRole": "State Land Allocation Officer", "requiredEvidence": "Application, identity, beneficial ownership declaration, proposed use and conflict declaration", "completionEvent": "StateLandApplicationScreened" },
+      { "order": 2, "name": "Confirm state-land availability", "explanation": "Confirm the parcel is state land available for allocation and is not committed, occupied, reserved, disputed, protected or already allocated.", "responsibleRole": "State Land Inventory Officer", "requiredEvidence": "State-land inventory extract, GIS availability check, occupation check and reservation check", "completionEvent": "StateLandAvailabilityConfirmed" },
+      { "order": 3, "name": "Complete valuation, planning and environmental checks", "explanation": "Obtain valuation, planning compatibility, zoning, development conditions and environmental decisions before allocation approval.", "responsibleRole": "Planning and Valuation Review Panel", "requiredEvidence": "Valuation, planning approval or opinion, zoning extract and environmental decision", "completionEvent": "StateLandPreApprovalCleared" },
+      { "order": 4, "name": "Approve allocation and execute lease", "explanation": "Record committee and Commissioner approvals, notify affected parties where required and execute the lease or allocation instrument.", "responsibleRole": "Commissioner of Lands", "requiredEvidence": "Committee minutes, approval instrument, notification record, lease and payment evidence", "completionEvent": "StateLandLeaseExecuted" },
+      { "order": 5, "name": "Recheck registry before title issuance", "explanation": "Perform a final official search and uniqueness check immediately before registration to detect intervening allocation, transfer, caution or duplicate title risk.", "responsibleRole": "Lands Registry Search Officer", "requiredEvidence": "Current official search, duplicate-title check, cadastral validation and caution clearance", "completionEvent": "TitlePreIssuanceCheckCompleted" },
+      { "order": 6, "name": "Register and issue title deed", "explanation": "Register the interest, generate one unique title reference, apply secure issuance controls and publish the audit record without creating a second title for the same parcel.", "responsibleRole": "Registrar of Lands", "requiredEvidence": "Registered instrument, unique title number, title-deed issue record and audit correlation ID", "completionEvent": "TitleDeedIssued" }
+    ],
+    "rules": [
+      { "id": "WFR-029-001", "sourceInstrumentId": "LAW-040", "sourceInstrumentName": "Zambia Lands Act", "ruleName": "State land availability", "machineExpression": "stateLand.allocation.requested = true -> stateLand.available = true && stateLand.reserved = false && stateLand.occupied = false", "explanation": "State land must be confirmed available before it can be allocated.", "status": "Active" },
+      { "id": "WFR-029-002", "sourceInstrumentId": "LAW-041", "sourceInstrumentName": "Zambia Lands and Deeds Registry Act", "ruleName": "One parcel one active title", "machineExpression": "title.issue.requested = true -> registry.sameParcel.activeTitles = 0 && registry.sameParcel.pendingTitles = 0 && registry.titleNumber.unique = true", "explanation": "A title deed may not be issued where another active or pending title exists for the same parcel.", "status": "Active" },
+      { "id": "WFR-029-003", "sourceInstrumentId": "LAW-041", "sourceInstrumentName": "Zambia Lands and Deeds Registry Act", "ruleName": "Final official search", "machineExpression": "title.issue.requested = true -> officialSearch.completed = true && officialSearch.ageDays <= 7 && officialSearch.cautionCount = 0", "explanation": "Title issuance requires a fresh final search and no unresolved caution.", "status": "Active" },
+      { "id": "WFR-029-004", "sourceInstrumentId": "LAW-042", "sourceInstrumentName": "Zambia Urban and Regional Planning Act", "ruleName": "Approved land use", "machineExpression": "stateLand.lease.executed = true -> planning.useCompatible = true && planning.requiredApproval.status = 'Approved'", "explanation": "State land lease and development use must comply with planning controls.", "status": "Active" },
+      { "id": "WFR-029-005", "sourceInstrumentId": "LAW-014", "sourceInstrumentName": "Public Finance Management Act", "ruleName": "Public land value and payment evidence", "machineExpression": "stateLand.lease.executed = true -> valuation.approved = true && landPayment.evidence.count > 0", "explanation": "Public land allocation must preserve valuation approval and evidence of required payments or authorised arrangements.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "1 business day", "recipientRole": "State Land Allocation Officer", "action": "Place allocation or title request on hold and request missing approval or registry evidence" },
+      { "level": 2, "after": "3 business days", "recipientRole": "Registrar of Lands", "action": "Open a duplicate-interest or title-conflict review and freeze issuance" },
+      { "level": 3, "after": "7 business days", "recipientRole": "Commissioner of Lands and Permanent Secretary — Lands", "action": "Refer material conflict, suspected fraud or unauthorised allocation for formal investigation and decision" }
+    ]
+  }
+]

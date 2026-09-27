@@ -1,0 +1,50 @@
+[
+  {
+    "id": "CHG-0001",
+    "instrumentId": "LAW-041",
+    "eventType": "Version review",
+    "summary": "Land administration law review opened for machine-readable obligation alignment.",
+    "fromVersion": "1.0",
+    "toVersion": "1.1",
+    "actor": "Ministry of Lands legal review desk",
+    "evidenceReference": "LAND-REVIEW-2026-004",
+    "occurredAt": "2026-02-14T08:30:00Z",
+    "status": "In review"
+  },
+  {
+    "id": "CHG-0002",
+    "instrumentId": "DIR-2026-003",
+    "eventType": "Publication",
+    "summary": "Implementation directive published and routed to affected institutions.",
+    "fromVersion": "",
+    "toVersion": "1.0",
+    "actor": "Cabinet Office policy secretariat",
+    "evidenceReference": "GAZ-2026-014",
+    "occurredAt": "2026-03-01T09:00:00Z",
+    "status": "Recorded"
+  },
+  {
+    "id": "CHG-0003",
+    "instrumentId": "GAZ-2026-014",
+    "eventType": "Source verification",
+    "summary": "Official Gazette source fingerprint queued for verification.",
+    "fromVersion": "",
+    "toVersion": "1.0",
+    "actor": "Government Intelligence legal register",
+    "evidenceReference": "ZAMBIA-GAZETTE-2026-014",
+    "occurredAt": "2026-03-03T11:15:00Z",
+    "status": "Pending"
+  },
+  {
+    "id": "CHG-0004",
+    "instrumentId": "LAW-014",
+    "eventType": "Workflow impact review",
+    "summary": "Payment compliance workflows assessed after amendment publication.",
+    "fromVersion": "3.1",
+    "toVersion": "3.2",
+    "actor": "Ministry of Finance compliance unit",
+    "evidenceReference": "FIN-CONTROL-IMPACT-021",
+    "occurredAt": "2026-01-22T13:45:00Z",
+    "status": "Completed"
+  }
+]

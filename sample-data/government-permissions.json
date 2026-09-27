@@ -1,0 +1,16 @@
+[
+  { "code": "GovernmentIntelligence.Executive.View", "name": "Executive intelligence", "category": "Executive", "description": "View national command-centre intelligence, decisions and cross-government performance.", "status": "Active" },
+  { "code": "GovernmentIntelligence.Legal.View", "name": "Legal instruments", "category": "Legal", "description": "View policies, laws, regulations, guidelines and machine-readable rules.", "status": "Active" },
+  { "code": "GovernmentIntelligence.Lifecycle.View", "name": "Lifecycle monitoring", "category": "Lifecycle", "description": "View policy implementation lifecycle stages and delivery status.", "status": "Active" },
+  { "code": "GovernmentIntelligence.Operations.View", "name": "Operations monitoring", "category": "Operations", "description": "View programmes, work queues, workflows, evidence and assurance operations.", "status": "Active" },
+  { "code": "GovernmentIntelligence.Administration.View", "name": "Administration", "category": "Administration", "description": "Manage government roles, users, memberships and tenant administration.", "status": "Active" },
+  { "code": "GovernmentIntelligence.Platform.View", "name": "Platform operations", "category": "Platform", "description": "View integration health, platform security and privacy controls.", "status": "Active" }
+  ,{ "code": "GovernmentIntelligence.DigitalTwin.View", "name": "View Government Digital Twin", "category": "Digital Twin", "description": "View government digital twin entities and oversight projections.", "status": "Active" }
+  ,{ "code": "GovernmentIntelligence.DigitalTwin.Explore", "name": "Explore Digital Twin", "category": "Digital Twin", "description": "Filter and explore relationships, source evidence and dependencies.", "status": "Active" }
+  ,{ "code": "GovernmentIntelligence.DigitalTwin.ViewSensitive", "name": "View Sensitive Twin Data", "category": "Digital Twin", "description": "View restricted classifications where authorised.", "status": "Active" }
+  ,{ "code": "GovernmentIntelligence.DigitalTwin.CreateIntervention", "name": "Create Twin Intervention", "category": "Digital Twin", "description": "Create an auditable intelligence intervention.", "status": "Active" }
+  ,{ "code": "GovernmentIntelligence.DigitalTwin.RequestEvidence", "name": "Request Twin Evidence", "category": "Digital Twin", "description": "Request confirmation or evidence from an institution.", "status": "Active" }
+  ,{ "code": "GovernmentIntelligence.DigitalTwin.Export", "name": "Export Twin View", "category": "Digital Twin", "description": "Export an authorised intelligence view.", "status": "Active" }
+  ,{ "code": "GovernmentIntelligence.DigitalTwin.Scenario", "name": "Run Twin Scenario", "category": "Digital Twin", "description": "Create read-only impact projections.", "status": "Active" }
+  ,{ "code": "GovernmentIntelligence.DigitalTwin.AuditView", "name": "View Twin Audit", "category": "Digital Twin", "description": "View digital twin action and access audit records.", "status": "Active" }
+]

@@ -1,0 +1,4 @@
+[
+  { "id":"AUD-LEGAL-001", "occurredAt":"2026-09-27T07:30:00Z", "actor":"legal.reviewer@gov.zm", "action":"Approved extraction", "resourceType":"Legal document", "resourceId":"ING-2026-001", "outcome":"Success", "correlationId":"CORR-ING-001" },
+  { "id":"AUD-LEGAL-002", "occurredAt":"2026-09-27T08:15:00Z", "actor":"auditor.general@gov.zm", "action":"Export attempted", "resourceType":"Restricted legal instrument", "resourceId":"GUI-008", "outcome":"Denied — dual control required", "correlationId":"CORR-EXP-008" }
+]

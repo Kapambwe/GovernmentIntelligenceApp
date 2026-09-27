@@ -1,0 +1,4 @@
+[
+  { "id":"NOTIF-001", "instrumentId":"LAW-014", "eventType":"Workflow impact review", "summary":"A finance control change requires review of linked payment workflows.", "severity":"High", "recipientScope":"Ministry of Finance; workflow owners", "status":"Unread", "occurredAt":"2026-09-25T08:00:00Z" },
+  { "id":"NOTIF-002", "instrumentId":"DIR-2026-003", "eventType":"Directive publication", "summary":"A land administration directive was published and requires acknowledgement.", "severity":"Medium", "recipientScope":"Ministry of Lands and Natural Resources", "status":"Unread", "occurredAt":"2026-09-20T10:00:00Z" }
+]

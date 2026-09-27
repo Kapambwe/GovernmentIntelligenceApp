@@ -1,0 +1,4 @@
+[
+  { "Name":"Clinic payment dependency review", "StartNodeId":"payment-clinic", "RelationshipDepth":3, "EvidenceBackedOnly":false, "IncludeStale":true, "IncludeInferred":true },
+  { "Name":"High severity cross-institution risks", "Severity":"High", "RelationshipDepth":2, "EvidenceBackedOnly":true, "IncludeStale":true, "IncludeInferred":false }
+]
