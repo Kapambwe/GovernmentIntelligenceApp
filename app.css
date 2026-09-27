@@ -163,6 +163,15 @@ h1 { font-size: 2rem; margin: 0; }
 .rz-datatable-scrollable table { min-width: 1100px; }
 .rz-datatable-scrollable .rz-datatable-tbody > tr > td { padding: .7rem .65rem; }
 .rz-datatable-scrollable .rz-badge { max-width: 100%; white-space: normal; line-height: 1.2; }
+.land-grid-compact .rz-datatable-tbody > tr > td { padding: .35rem .45rem; }
+.land-grid-compact .rz-cell-data { font-size: .78rem; line-height: 1.15; }
+.land-status-legend { border-left: 4px solid #3568a8; }
+.land-print-only { display: none; }
+.land-status-legend:focus-within, .rz-button:focus-visible, .rz-dropdown:focus-within, .rz-textbox:focus-within, .rz-textarea:focus-within {
+    outline: 3px solid rgba(37, 99, 235, .35);
+    outline-offset: 2px;
+}
+.land-required-label::after { content: " *"; color: #b91c1c; }
 
 @media (max-width: 900px) {
     .app-content { padding: 1rem; }
@@ -172,8 +181,21 @@ h1 { font-size: 2rem; margin: 0; }
     .lifecycle-grid, .lifecycle-grid-events { grid-template-columns: 1fr; }
     .stage-navigation { align-items: start; flex-direction: column; gap: 1rem; }
     .stage-link-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .land-status-legend .rz-stack { align-items: flex-start; }
+    .land-status-legend .rz-text { font-size: .72rem; }
 }
 
 @media (max-width: 700px) {
     .asset-dialog-footer { align-items: stretch; flex-direction: column; }
+    .rz-datatable-scrollable table { min-width: 900px; }
+    .land-status-legend { overflow-x: auto; }
+}
+
+@media print {
+    body { background: #ffffff; }
+    .rz-sidebar, .rz-header, .land-print-hide, button, .rz-button { display: none !important; }
+    .rz-body, .rz-content-container { margin: 0 !important; padding: 0 !important; }
+    .rz-card { box-shadow: none !important; border: 1px solid #cbd5e1 !important; break-inside: avoid; }
+    .rz-datatable-scrollable { overflow: visible !important; }
+    .rz-datatable-scrollable table { min-width: 0 !important; width: 100% !important; }
 }

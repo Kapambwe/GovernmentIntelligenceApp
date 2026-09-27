@@ -1,0 +1,50 @@
+[
+  {
+    "caseId": "ENC-ZM-0001",
+    "landJourneyId": "LJ-ZM-0004",
+    "parcelId": "SOL-03-7810",
+    "regionName": "North-Western",
+    "districtName": "Solwezi",
+    "category": "Public-reserve intrusion",
+    "status": "Verified encroachment",
+    "severity": "Critical",
+    "affectedParty": "Unidentified commercial occupier",
+    "responsibleInstitution": "Solwezi Municipal Council",
+    "affectedAreaHectares": 1.8,
+    "detectedAt": "2026-09-20T08:00:00Z",
+    "remedyDueDate": "2026-10-04T08:00:00Z",
+    "isSampleConfiguration": true
+  },
+  {
+    "caseId": "ENC-ZM-0002",
+    "landJourneyId": "LJ-ZM-0002",
+    "parcelId": "KIT-02-4409",
+    "regionName": "Copperbelt",
+    "districtName": "Kitwe",
+    "category": "Boundary discrepancy",
+    "status": "Suspected",
+    "severity": "High",
+    "affectedParty": "Adjacent community claimant",
+    "responsibleInstitution": "Provincial Lands Office",
+    "affectedAreaHectares": 4.2,
+    "detectedAt": "2026-09-18T09:30:00Z",
+    "remedyDueDate": "2026-10-15T09:30:00Z",
+    "isSampleConfiguration": true
+  },
+  {
+    "caseId": "ENC-ZM-0003",
+    "landJourneyId": "LJ-ZM-0003",
+    "parcelId": "MKG-01-0092",
+    "regionName": "Luapula",
+    "districtName": "Mansa",
+    "category": "Unauthorised development",
+    "status": "Resolved",
+    "severity": "Medium",
+    "affectedParty": "Local contractor",
+    "responsibleInstitution": "Mansa Municipal Council",
+    "affectedAreaHectares": 0.4,
+    "detectedAt": "2026-07-10T10:00:00Z",
+    "remedyDueDate": "2026-08-10T10:00:00Z",
+    "isSampleConfiguration": true
+  }
+]

@@ -1,0 +1,101 @@
+[
+  {
+    "id": "CDF-WF-013",
+    "workflowCode": "CDF-COUNCIL-TECHNICAL-AND-SAFEGUARDS-APPRAISAL",
+    "workflowName": "CDF Council Technical and Safeguards Appraisal",
+    "triggerType": "Event",
+    "eventNames": ["CouncilAppraisalRequested", "SiteAssessmentCompleted"],
+    "trigger": "CouncilAppraisalRequested or SiteAssessmentCompleted",
+    "schedule": "Weekly council appraisal pipeline review",
+    "escalationTrigger": "Design, cost, land, safeguards, budget or legal evidence is incomplete",
+    "escalationOwner": "Council Town Planning Officer and Provincial Local Government Officer",
+    "purpose": "Verify feasibility, design, site, safeguards, budget and legal readiness before a CDF project proceeds.",
+    "institution": "Local Authority Technical, Planning, Finance, Legal and Safeguards Units",
+    "ownerRole": "CDF Council Appraisal Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Zambia", "CDF", "Council", "Technical", "Safeguards"],
+    "participants": ["Council Technical Officer", "Planner", "Finance Officer", "Legal Officer", "Safeguards Officer", "WDC"],
+    "approvalAuthorities": ["Council Technical Panel", "Council Accounting Officer"],
+    "requiredRegistries": ["Project register", "Council appraisal register", "Land and site register", "Budget register"],
+    "lastReviewed": "2026-09-27T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Validate site and feasibility", "explanation": "Confirm land, location, design feasibility, beneficiaries and implementation constraints.", "responsibleRole": "Council Technical Officer", "requiredEvidence": "Site assessment, design and feasibility report", "completionEvent": "CdfSiteFeasibilityVerified" },
+      { "order": 2, "name": "Review safeguards and legal readiness", "explanation": "Check environmental, social, land, accessibility and legal requirements.", "responsibleRole": "Council Safeguards and Legal Officers", "requiredEvidence": "Safeguards screening, land evidence and legal review", "completionEvent": "CdfSafeguardsCleared" },
+      { "order": 3, "name": "Confirm cost and budget match", "explanation": "Match estimate, bill of quantities, funding envelope and delivery plan.", "responsibleRole": "Council Finance and Planning Panel", "requiredEvidence": "Cost estimate, BOQ, budget match and appraisal decision", "completionEvent": "CdfCouncilAppraisalCompleted" }
+    ],
+    "rules": [
+      { "id": "CDF-R-013", "sourceInstrumentId": "CDF-CONFIG", "sourceInstrumentName": "CDF configuration", "ruleName": "Approved amount supports appraisal", "machineExpression": "cdf.approvedAmount > 0 and cdf.appraisal.evidence.count > 0", "explanation": "A council appraisal requires an approved amount and supporting evidence.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "5 business days", "recipientRole": "CDF Council Appraisal Officer", "action": "Request missing feasibility, safeguards or cost evidence" },
+      { "level": 2, "after": "15 business days", "recipientRole": "Council Accounting Officer", "action": "Escalate unresolved appraisal or legal readiness gap" }
+    ]
+  },
+  {
+    "id": "CDF-WF-014",
+    "workflowCode": "CDF-CONTRACT-MOBILISATION-AND-VARIATION",
+    "workflowName": "CDF Contract Mobilisation and Variation Control",
+    "triggerType": "Event",
+    "eventNames": ["AwardApproved", "ContractExecuted", "VariationRequested"],
+    "trigger": "AwardApproved or ContractExecuted or VariationRequested",
+    "schedule": "Daily contract readiness and variation review",
+    "escalationTrigger": "Contract, security, site handover, baseline or variation approval evidence is missing",
+    "escalationOwner": "Council Procurement Officer and Accounting Officer",
+    "purpose": "Control contract execution, mobilisation, baseline commitments and authorised changes after procurement award.",
+    "institution": "Local Authority Procurement, Legal, Technical, Finance and Contractor",
+    "ownerRole": "CDF Contract Oversight Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Zambia", "CDF", "Contract", "Mobilisation", "Variation"],
+    "participants": ["Council Procurement Officer", "Contract Manager", "Legal Officer", "Technical Officer", "Contractor", "WDC"],
+    "approvalAuthorities": ["Accounting Officer", "Authorised Variation Authority"],
+    "requiredRegistries": ["Contract register", "Procurement register", "Milestone register", "Variation register"],
+    "lastReviewed": "2026-09-27T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Validate executed contract", "explanation": "Confirm signatures, security, insurance, scope, milestones and authorised parties.", "responsibleRole": "CDF Contract Oversight Officer", "requiredEvidence": "Executed contract, security and insurance evidence", "completionEvent": "CdfContractValidated" },
+      { "order": 2, "name": "Confirm mobilisation and baseline", "explanation": "Record site handover, work plan, baseline cost, schedule and reporting obligations.", "responsibleRole": "Council Contract Manager", "requiredEvidence": "Site handover, mobilisation plan and baseline", "completionEvent": "CdfContractMobilised" },
+      { "order": 3, "name": "Assess variation or extension", "explanation": "Test technical basis, cost, time, budget and approval authority before any change.", "responsibleRole": "Authorised Variation Review Panel", "requiredEvidence": "Variation request, technical report, cost impact and decision", "completionEvent": "CdfContractVariationDecided" }
+    ],
+    "rules": [
+      { "id": "CDF-R-014", "sourceInstrumentId": "PROCUREMENT-CONFIG", "sourceInstrumentName": "Procurement configuration", "ruleName": "Variation requires authority", "machineExpression": "cdf.variation.requested = false or cdf.variation.authorised = true", "explanation": "A contract variation cannot proceed without configured authority and evidence.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "2 business days", "recipientRole": "CDF Contract Oversight Officer", "action": "Request contract or mobilisation evidence" },
+      { "level": 2, "after": "7 business days", "recipientRole": "Accounting Officer", "action": "Escalate unauthorised or unsupported variation" }
+    ]
+  },
+  {
+    "id": "CDF-WF-015",
+    "workflowCode": "CDF-HANDOVER-SUSTAINABILITY-AND-CLOSURE",
+    "workflowName": "CDF Handover Sustainability and Closure",
+    "triggerType": "Event",
+    "eventNames": ["ProjectCompletionSubmitted", "HandoverAccepted", "ClosureRequested"],
+    "trigger": "ProjectCompletionSubmitted or HandoverAccepted or ClosureRequested",
+    "schedule": "Monthly completion and closure review",
+    "escalationTrigger": "Defect, final account, asset register, custodian, audit or complaint evidence remains open",
+    "escalationOwner": "Council Technical Officer and Internal Audit Officer",
+    "purpose": "Verify completion, handover, operating sustainability, final account and closure conditions for a CDF project.",
+    "institution": "Local Authority, Contractor, Custodian, WDC, Community, Province and Ministry",
+    "ownerRole": "CDF Closure and Sustainability Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Zambia", "CDF", "Handover", "Sustainability", "Closure"],
+    "participants": ["Council Technical Officer", "Contractor", "Custodian", "WDC", "Community", "Internal Audit"],
+    "approvalAuthorities": ["Council Accounting Officer", "Authorised Asset Custodian"],
+    "requiredRegistries": ["Project register", "Asset register", "Final account register", "Audit register", "Complaint register"],
+    "lastReviewed": "2026-09-27T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Verify completion and defects", "explanation": "Inspect output, quality, beneficiary acceptance and outstanding defects.", "responsibleRole": "Council Technical Officer", "requiredEvidence": "Final inspection, completion certificate and community feedback", "completionEvent": "CdfCompletionVerified" },
+      { "order": 2, "name": "Transfer custody and sustainability plan", "explanation": "Register the asset, custodian, operating plan, maintenance needs and handover acceptance.", "responsibleRole": "Authorised Asset Custodian", "requiredEvidence": "Handover certificate, asset record and sustainability plan", "completionEvent": "CdfHandoverAccepted" },
+      { "order": 3, "name": "Reconcile and close journey", "explanation": "Confirm final account, audit disposition, complaint disposition and closure approval.", "responsibleRole": "CDF Closure and Sustainability Officer", "requiredEvidence": "Final account, audit outcome, complaint status and closure decision", "completionEvent": "CdfProjectClosed" }
+    ],
+    "rules": [
+      { "id": "CDF-R-015", "sourceInstrumentId": "CDF-CONFIG", "sourceInstrumentName": "CDF configuration", "ruleName": "No unresolved closure blockers", "machineExpression": "cdf.openActionCount = 0 and cdf.finalAccount.reconciled = true", "explanation": "A CDF journey cannot close while required actions or final-account reconciliation remain open.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "5 business days", "recipientRole": "CDF Closure and Sustainability Officer", "action": "Request missing completion or handover evidence" },
+      { "level": 2, "after": "15 business days", "recipientRole": "Internal Audit Officer", "action": "Escalate unresolved closure blocker or final-account issue" }
+    ]
+  }
+]

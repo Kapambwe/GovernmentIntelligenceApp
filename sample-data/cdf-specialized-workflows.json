@@ -1,0 +1,68 @@
+[
+  {
+    "id": "CDF-WF-011",
+    "workflowCode": "CDF-BURSARY-APPLICATION-AND-DISBURSEMENT",
+    "workflowName": "CDF Bursary Application and Disbursement",
+    "triggerType": "Event",
+    "eventNames": ["BursaryApplicationSubmitted", "BursaryRenewalDue"],
+    "trigger": "BursaryApplicationSubmitted or BursaryRenewalDue",
+    "schedule": "Termly bursary eligibility and attendance review",
+    "escalationTrigger": "Identity, constituency, duplicate support, enrolment or payment evidence is missing",
+    "escalationOwner": "CDFC Chairperson and Council Education Officer",
+    "purpose": "Control bursary applications, eligibility, prioritisation, award, disbursement and academic monitoring.",
+    "institution": "Applicant, WDC, CDFC, Local Authority and Education Institution",
+    "ownerRole": "CDF Bursary Oversight Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Zambia", "CDF", "Bursary", "Education"],
+    "participants": ["Student or Guardian", "WDC", "CDFC", "Council Education Officer", "School or Institution"],
+    "approvalAuthorities": ["CDFC", "Council Accounting Officer"],
+    "requiredRegistries": ["Bursary application register", "Beneficiary register", "Institution register", "Payment register"],
+    "lastReviewed": "2026-09-27T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Verify bursary eligibility", "explanation": "Check identity, constituency, vulnerability, admission and duplicate support.", "responsibleRole": "CDF Bursary Intake Officer", "requiredEvidence": "Identity, admission, vulnerability and constituency evidence", "completionEvent": "CdfBursaryEligibilityVerified" },
+      { "order": 2, "name": "Review and approve award", "explanation": "WDC and CDFC score, prioritise and approve the configured award.", "responsibleRole": "CDFC Bursary Review Panel", "requiredEvidence": "Score, minutes, fee schedule and approval decision", "completionEvent": "CdfBursaryAwardApproved" },
+      { "order": 3, "name": "Disburse and monitor attendance", "explanation": "Confirm authorised payment route, enrolment, attendance and renewal conditions.", "responsibleRole": "CDF Bursary Monitoring Officer", "requiredEvidence": "Payment receipt, enrolment and attendance evidence", "completionEvent": "CdfBursaryMonitoringCompleted" }
+    ],
+    "rules": [
+      { "id": "CDF-R-011", "sourceInstrumentId": "CDF-CONFIG", "sourceInstrumentName": "CDF configuration", "ruleName": "No duplicate bursary support", "machineExpression": "cdf.beneficiary.duplicateSupport = false", "explanation": "A bursary award must not duplicate another active support award without an approved exception.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "3 business days", "recipientRole": "CDF Bursary Oversight Officer", "action": "Request missing eligibility or institution evidence" },
+      { "level": 2, "after": "10 business days", "recipientRole": "CDFC Chairperson", "action": "Escalate unsupported award or overdue monitoring" }
+    ]
+  },
+  {
+    "id": "CDF-WF-012",
+    "workflowCode": "CDF-INFORMATION-DISSEMINATION",
+    "workflowName": "CDF Information Dissemination and Public Disclosure",
+    "triggerType": "Event",
+    "eventNames": ["ReportCertified", "PublicDisclosureRequested", "ProjectClosureApproved"],
+    "trigger": "ReportCertified or PublicDisclosureRequested or ProjectClosureApproved",
+    "schedule": "Monthly approved-disclosure review",
+    "escalationTrigger": "Disclosure approval, privacy review, correction or publication evidence is missing",
+    "escalationOwner": "Council Public Information Officer and Data Protection Officer",
+    "purpose": "Publish approved CDF information while protecting personal, sensitive and legally restricted data.",
+    "institution": "Local Authority, WDC, CDFC, Province, Ministry and Public Information Office",
+    "ownerRole": "CDF Public Disclosure Officer",
+    "status": "Active",
+    "version": "1.0",
+    "tags": ["Zambia", "CDF", "Disclosure", "Transparency", "Privacy"],
+    "participants": ["Council Public Information Officer", "Data Protection Officer", "WDC", "CDFC", "Ministry CDF Office"],
+    "approvalAuthorities": ["Council Accounting Officer", "Data Protection Officer"],
+    "requiredRegistries": ["Disclosure register", "CDF report register", "Privacy review register", "Publication register"],
+    "lastReviewed": "2026-09-27T00:00:00",
+    "steps": [
+      { "order": 1, "name": "Prepare approved disclosure set", "explanation": "Select certified financial, project, procurement and outcome information.", "responsibleRole": "CDF Public Disclosure Officer", "requiredEvidence": "Certified report and disclosure data set", "completionEvent": "CdfDisclosureSetPrepared" },
+      { "order": 2, "name": "Complete privacy and sensitivity review", "explanation": "Remove protected personal data and confirm lawful publication scope.", "responsibleRole": "Data Protection Officer", "requiredEvidence": "Privacy review and redaction decision", "completionEvent": "CdfDisclosurePrivacyApproved" },
+      { "order": 3, "name": "Publish and preserve receipt", "explanation": "Publish the approved information and preserve the public receipt and correction path.", "responsibleRole": "Council Public Information Officer", "requiredEvidence": "Publication URL, timestamp and correction contact", "completionEvent": "CdfDisclosurePublished" }
+    ],
+    "rules": [
+      { "id": "CDF-R-012", "sourceInstrumentId": "DATA-PROTECTION-CONFIG", "sourceInstrumentName": "Data protection configuration", "ruleName": "Privacy review required", "machineExpression": "cdf.disclosure.privacyApproved = true", "explanation": "CDF information must not be published before privacy and sensitivity review.", "status": "Active" }
+    ],
+    "escalations": [
+      { "level": 1, "after": "3 business days", "recipientRole": "CDF Public Disclosure Officer", "action": "Request missing certification or publication evidence" },
+      { "level": 2, "after": "7 business days", "recipientRole": "Data Protection Officer", "action": "Escalate unresolved privacy or sensitive-data concern" }
+    ]
+  }
+]
